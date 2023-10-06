@@ -15,7 +15,7 @@ const options = {
 	}
 }
 
-fetch(`http://${process.env.SERVER_ADDRESS + ":" + process.env.WEB_PORT }/api/account/profile?=`, options)
+fetch(`http://devsoleo.fr:3000/api/account/profile?=`, options)
 .then(response => response.json())
 .then(response => {
 	console.log(response)
