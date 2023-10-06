@@ -1,12 +1,17 @@
 <template>
   <form @submit.prevent="login">
-    <input v-model="username" placeholder="username">
-    <input v-model="password" placeholder="password" type="password">
-    <input type="submit" value="log in">
+    <input v-model="username" placeholder="Identifiant" required />
+    <input v-model="password" placeholder="Mot de passe" type="password" required />
+
+    <input type="submit" value="Se connecter">
+
+	<router-link to="/register">Pas encore inscrit ?</router-link>
   </form>
 </template>
 
 <script>
+import router from '../router'
+
 export default {
 	data() {
 		return {
@@ -16,7 +21,7 @@ export default {
 	},
 	methods: {
 		async login() {
-			const { username, password } = this;
+			const { username, password } = this
 
 			const options = {
 				method: 'POST',
@@ -30,9 +35,11 @@ export default {
 				})
 			}
 
-			fetch(`http://${process.env.SERVER_ADDRESS + ":" + process.env.WEB_PORT }/api/account/login?=`, options)
+			fetch(`http://devsoleo.fr:3000/api/account/login?=`, options)
 				.then(response => response.json())
-				.then(response => console.log(response))
+				.then(response => {
+					router.push({ name: 'profile' })
+				})
 				.catch(err => console.error(err))
 			}
 		}
