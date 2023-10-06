@@ -1,0 +1,17 @@
+{
+  "name": "city-project-client",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host --port 3002",
+    "build": "vite build",
+    "preview": "vite build && vite preview --host --port 3002"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "vite": "^4.4.9",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vitejs/plugin-vue-jsx": "^3.0.2"
+  }
+}
