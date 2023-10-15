@@ -1,47 +1,56 @@
 <template>
-  <form @submit.prevent="login">
-    <input v-model="username" placeholder="Identifiant" required />
-    <input v-model="password" placeholder="Mot de passe" type="password" required />
-
-    <input type="submit" value="Se connecter">
-
-	<router-link to="/register">Pas encore inscrit ?</router-link>
-  </form>
+	<div class="login_box">
+        <div class="inner">
+            <div class="login_title">
+                <h1>Connexion - CityProject</h1>
+            </div>
+            <div class="login_form">
+                <form @submit.prevent="login">
+                    <div class="login_line">
+                        <div class="icon"><img src="../assets/svg/avatar.svg" alt="" /></div>
+						<input v-model="account_name" type="text" name="account_name" placeholder="Identifiant" required />
+                    </div>
+                    <div class="login_line">
+                        <div class="icon"><img src="../assets/svg/lock.svg" alt="" /></div>
+    					<input v-model="password" type="password" placeholder="Mot de passe" required />
+                    </div>
+                    <div class="submit">
+                        <input type="submit" value="Connexion" />
+						<router-link to="/register">Créer ?</router-link>
+                    </div>
+                </form>
+            </div>
+        </div>        
+    </div>
 </template>
 
 <script>
 import router from '../router'
+import { useAuth } from '@/stores/auth'
 
 export default {
 	data() {
 		return {
-			username: "",
+			account_name: "",
 			password: ""
 		}
 	},
 	methods: {
 		async login() {
-			const { username, password } = this
+			const { account_name, password } = this
 
-			const options = {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParams({
-					account_name: username,
-					password: password,
-				})
-			}
+			const { login } = useAuth()
 
-			fetch(`http://devsoleo.fr:3000/api/account/login?=`, options)
-				.then(response => response.json())
-				.then(response => {
-					router.push({ name: 'profile' })
-				})
+			await login(account_name, password)
+				.then(() => {
+					router.push('/game')
+				 })
 				.catch(err => console.error(err))
-			}
 		}
 	}
+}
 </script>
+
+<style lang="scss">
+@import "../assets/login.sass";
+</style>
