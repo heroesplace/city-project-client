@@ -1,0 +1,88 @@
+@import "../variables.sass"
+
+div.settings_window
+    display: none
+    position: absolute
+    top: calc(50% - 20vh) /* sera toujours parfaitement centré, mettre la moitié de la taille de height */
+    left: calc(50% - 25vh) /* sera toujours parfaitement centré, mettre la moitié de la taille de width */
+    background-color: $background-color
+    height: 40vh
+    width: 50vh
+    padding: $window_padding
+
+    div.inner
+        border: $border
+        height: 100%
+        box-sizing: border-box
+        display: flex
+        flex-direction: column
+        color: white
+    
+        div.top
+            height: 2vh
+            width: 100%
+            display: flex
+            flex-direction: row
+            border-bottom: $border
+        
+            div.title
+                height: 100%
+                width: 96%
+                display: flex
+                justify-content: center
+                align-items: center
+                cursor: move
+            
+            div.close
+                height: 100%
+                width: 2vh
+                display: flex
+                justify-content: center
+                align-items: center
+                cursor: pointer
+                border-left: $border
+                font-size: 1.2vh
+
+            div.close:hover
+                background-color: rgba(255, 255, 255, 0.2)
+
+        div.bottom
+            height: 95%
+            width: 100%
+            display: flex
+            flex-direction: row
+
+            div.menu
+                position: relative
+                display: flex
+                flex-direction: column
+                height: 100%
+                width: 30%
+                justify-content: space-between
+                border-right: $border
+
+                div
+                    border-top: $border
+                    height: 100%
+                    width: 100%
+                    cursor: pointer
+                    align-items: center
+                    justify-content: center
+                    display: flex
+
+                div:first-child
+                    border-top: none
+
+                div:hover
+                    background-color: rgba(255, 255, 255, 0.2)
+            
+            div.content
+                width: 70%
+
+                div:first-child
+                    display: block
+
+                div
+                    display: none
+                    height: 100%
+                    width: 100%

@@ -1,13 +1,21 @@
 <template>
-    <canvas width="496" height="272" id="background"></canvas>
-    <canvas width="496" height="272" id="entities"></canvas>
-    <canvas width="496" height="272" id="player"></canvas>
+    <div class="container">
+		<canvas width="496" height="272" id="background"></canvas>
+		<canvas width="496" height="272" id="entities"></canvas>
+		<canvas width="496" height="272" id="player"></canvas>
+
+		<div class="user-interface">
+			<Window title="Settings" draggable display></Window>
+		</div>
+	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { io } from "socket.io-client"
 import { keydownHandler } from '../game/events.js'
+
+import Window from '../components/Window.vue'
 
 document.title = "CityProject"
 

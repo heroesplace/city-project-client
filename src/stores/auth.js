@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+const SERVER_ADDRESS="libertyr0ad.fr"
+
 export const useAuth = defineStore('auth', {
     state: () => ({
         authenticated: false,
@@ -24,7 +26,7 @@ export const useAuth = defineStore('auth', {
                     })
                 }
 
-                fetch(`http://localhost:3000/api/account/login?=`, options)
+                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/login?=`, options)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status == 200) {
@@ -50,7 +52,7 @@ export const useAuth = defineStore('auth', {
                     }
                 }
                 
-                fetch(`http://localhost:3000/api/account/verify-token?=`, options)
+                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/verify-token?=`, options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status == 200) {
