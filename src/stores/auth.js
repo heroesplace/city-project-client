@@ -12,6 +12,30 @@ export const useAuth = defineStore('auth', {
         }
     },
     actions: {
+        async logout() {
+            return new Promise((resolve, reject) => {
+                const options = {
+                    method: 'GET',
+                    credentials: "include",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }
+
+                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/logout?=`, options)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status == 200) {
+                            this.authenticated = false
+
+                            resolve()
+                        } else {
+                            reject(new Error('Logout failed'))
+                        }
+                    })
+                    .catch(err => reject(err))
+            })
+        },
         async login(account_name, password) {
             return new Promise((resolve, reject) => {
                 const options = {

@@ -5,11 +5,13 @@
 		<canvas width="496" height="272" id="player"></canvas>
 
 		<div class="user-interface">
-			<Window :title="lg('settings')" draggable display>
+			<Window :title="lg('settings')" id="settings_window" draggable display>
 				<template v-slot:content>
 					<SettingsModule />
 				</template>
 			</Window>
+
+			<ToolbarModule />
 		</div>
 	</div>
 </template>
@@ -23,6 +25,7 @@ import lg from '../locales/lg.js'
 import Window from '../components/Window.vue'
 
 import SettingsModule from '../modules/SettingsModule.vue'
+import ToolbarModule from '../modules/ToolbarModule.vue'
 
 document.title = "CityProject"
 

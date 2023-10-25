@@ -1,6 +1,6 @@
 <template>
     <!-- Fenêtre settings -->
-    <div class="settings_window" ref="window">
+    <div :id="id" class="window" ref="window">
         <div class="inner">
             <div class="top">
                 <div class="title" >{{ title }}</div>
@@ -18,6 +18,7 @@ export default {
     name: 'Window',
     props: {
         title: String,
+        id: String,
         draggable: Boolean,
         display: Boolean /* état d'affichage à l'ouverture de l'interface */
     },

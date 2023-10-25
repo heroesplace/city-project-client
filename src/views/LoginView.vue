@@ -45,7 +45,11 @@ export default {
 				.then(() => {
 					router.push('/game')
 				 })
-				.catch(err => console.error(err))
+				.catch(err => {
+					console.error(err)
+
+					alert("Identifiant ou mot de passe incorrect")
+				})
 		}
 	}
 }
