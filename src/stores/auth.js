@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const SERVER_ADDRESS="libertyr0ad.fr"
+const SERVER_ADDRESS="localhost"
 
 export const useAuth = defineStore('auth', {
     state: () => ({

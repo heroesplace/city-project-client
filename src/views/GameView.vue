@@ -5,17 +5,24 @@
 		<canvas width="496" height="272" id="player"></canvas>
 
 		<div class="user-interface">
-			<Window title="Settings" draggable display></Window>
+			<Window :title="lg('settings')" draggable display>
+				<template v-slot:content>
+					<SettingsModule />
+				</template>
+			</Window>
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { io } from "socket.io-client"
 import { keydownHandler } from '../game/events.js'
 
+import lg from '../locales/lg.js'
+
 import Window from '../components/Window.vue'
+
+import SettingsModule from '../modules/SettingsModule.vue'
 
 document.title = "CityProject"
 

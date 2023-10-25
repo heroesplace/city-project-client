@@ -7,44 +7,21 @@
                 <div class="close" @click=closeWindow()>✕</div>
             </div>
             <div class="bottom">
-                <div class="menu">
-                    <div class="menu_button" id="general">Général</div>
-                    <div class="menu_button" id="audio">Audio</div>
-                    <div class="menu_button" id="video">Vidéo</div>
-                    <div class="menu_button" id="gameplay">Gameplay</div>
-                    <div class="menu_button" id="bindings">Touches</div>
-                    <div class="menu_button" id="social">Social</div>
-                    <div class="menu_button" id="interface">Interface</div>
-                </div>
-                <div class="content">
-                    <div class="content_general">Contenu Général</div>
-                    <div class="content_audio">Contenu Audio</div>
-                    <div class="content_video">Plein écran
-                        <input type="checkbox" id="fullscreen" onclick="toggleFullscreen()">
-                    </div>
-                    <div class="content_gameplay">Contenu Gameplay</div>
-                    <div class="content_bindings">Contenu Touches</div>
-                    <div class="content_social">Contenu Social</div>
-                    <div class="content_interface">Contenu Interface</div>
-                </div>
+                <slot name="content"></slot>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-
 export default {
     name: 'Window',
     props: {
         title: String,
         draggable: Boolean,
-        display: Boolean
+        display: Boolean /* état d'affichage à l'ouverture de l'interface */
     },
-    setup(props) {
-
-    },
+    setup(props) {},
     mounted() {
         if (this.display) {
             this.$refs.window.style.display = 'block';

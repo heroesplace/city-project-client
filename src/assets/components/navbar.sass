@@ -1,0 +1,41 @@
+@import "../variables.sass"
+
+div.settings_window
+    div.bottom 
+        div.menu
+            position: relative
+            display: flex
+            flex-direction: column
+            height: 100%
+            width: 30%
+            justify-content: start
+            border-right: $border
+
+            div.menu_button
+                border-top: $border
+                height: 10%
+                width: 100%
+                cursor: pointer
+                align-items: center
+                justify-content: center
+                display: flex
+
+                &:first-child
+                    border-top: none
+
+                &:last-child
+                    border-bottom: $border
+
+                &:hover
+                    background-color: rgba(255, 255, 255, 0.2)
+        
+        div.content
+            width: 70%
+
+            div:first-child
+                display: block
+
+            div
+                display: none
+                height: 100%
+                width: 100%
