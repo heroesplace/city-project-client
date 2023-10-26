@@ -7,11 +7,11 @@
             <div class="login_form">
                 <form @submit.prevent="login">
                     <div class="login_line">
-                        <div class="icon"><img src="../assets/svg/avatar.svg" alt="" /></div>
+                        <div class="icon"><img src="/svg/avatar.svg" alt="" /></div>
 						<input v-model="account_name" type="text" name="account_name" placeholder="Identifiant" required />
                     </div>
                     <div class="login_line">
-                        <div class="icon"><img src="../assets/svg/lock.svg" alt="" /></div>
+                        <div class="icon"><img src="/svg/lock.svg" alt="" /></div>
     					<input v-model="password" type="password" placeholder="Mot de passe" required />
                     </div>
                     <div class="submit">

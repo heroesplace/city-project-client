@@ -12,12 +12,13 @@
 			</Window>
 
 			<ToolbarModule />
+
+			<ChatModule />
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { io } from "socket.io-client"
 import { keydownHandler } from '../game/events.js'
 
 import lg from '../locales/lg.js'
@@ -26,6 +27,7 @@ import Window from '../components/Window.vue'
 
 import SettingsModule from '../modules/SettingsModule.vue'
 import ToolbarModule from '../modules/ToolbarModule.vue'
+import ChatModule from '../modules/ChatModule.vue'
 
 document.title = "CityProject"
 
@@ -57,13 +59,11 @@ import GraphicsEngine from '../game/engine.js'
 import MapGrid from '../game/engine/grid.js'
 import Sprite from '../game/engine/sprite.js'
 
-onMounted(() => {
-	const socket = io("ws://localhost:3001", {
-		auth: {
-			token: document.cookie.split('=')[1]
-		}
-	})
+import { socket, init} from "@/api/socket/socket.js";
 
+init()
+
+onMounted(() => {
 	document.addEventListener("keydown", (event) => keydownHandler(event, socket))
 
 	const engine = new GraphicsEngine(socket, document.querySelectorAll('canvas'))

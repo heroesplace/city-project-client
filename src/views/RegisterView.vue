@@ -7,23 +7,23 @@
         <div class="signup_form">
             <form @submit.prevent="register">
                 <div class="signup_line">
-                    <div class="icon"><img src="../assets/svg/avatar.svg" alt="" /></div>
+                    <div class="icon"><img src="/svg/avatar.svg" alt="" /></div>
                     <input v-model="account_name" type="text" name="username" placeholder="Identifiant" required/>
                 </div>
                 <div class="signup_line">
-                    <div class="icon"><img src="../assets/svg/sword.svg" alt="" /></div>
+                    <div class="icon"><img src="/svg/sword.svg" alt="" /></div>
                     <input v-model="character_name" type="text" name="character" placeholder="Personnage" required/>
                 </div>
                 <div class="signup_line">
-                    <div class="icon"><img src="../assets/svg/mail.svg" alt="" /></div>
+                    <div class="icon"><img src="/svg/mail.svg" alt="" /></div>
                     <input v-model="email_address" type="email" name="email" placeholder="Mail" required/>
                 </div>
                 <div class="signup_line">
-                    <div class="icon"><img src="../assets/svg/lock.svg" alt="" /></div>
+                    <div class="icon"><img src="/svg/lock.svg" alt="" /></div>
                     <input v-model="password" type="password" name="password" placeholder="Mot de passe" required/>
                 </div>
                 <div class="signup_line">
-                    <div class="icon"><img src="../assets/svg/lock.svg" alt="" /></div>
+                    <div class="icon"><img src="/svg/lock.svg" alt="" /></div>
                     <input v-model="confirm_password" type="password" name="confirm_password" placeholder="Confirmer MDP" required/>
                 </div>
                 <div class="submit">

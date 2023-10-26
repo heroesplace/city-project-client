@@ -1,0 +1,103 @@
+@import "../variables.sass"
+
+div.user-interface div.chat
+  position: absolute
+  bottom: 2vh
+  left: 2vh
+  background-color: $background-color
+  height: 40vh
+  width: 45vh
+  padding: $window_padding
+  overflow-wrap: break-word
+
+  div.inner
+    border: $border
+    height: 100%
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    padding-right: 0.5vh
+
+    div.top
+      display: flex
+      flex-direction: row
+      color: white
+      justify-content: space-between
+      width: calc(100% + 0.5vh)
+      border-bottom: $border
+      margin-bottom: 0.5vh
+
+      div:hover
+        background-color: rgba(255, 255, 255, 0.2)
+        cursor: pointer
+
+      div
+        border-left: $border
+        height: 100%
+        width: 100%
+        text-align: center
+      
+      div.village
+        color: orange
+      
+      div.duchy
+        color: lightblue
+      
+      div.kingdom
+        color: yellow
+      
+      div.empire
+        color: red
+      
+      div.world
+        color: lime
+
+      div.dm
+        color: lightpink
+      
+      div:first-child
+        border-left: none
+
+    div.messages
+      flex: 1
+      overflow-y: scroll
+      padding: 0 2%
+
+      &::-webkit-scrollbar
+        width: 1.5vh
+
+      &::-webkit-scrollbar-track
+        border-radius: 10px
+
+      &::-webkit-scrollbar-thumb
+        background-color: #ffffff30
+        border: $border
+        border-radius: 0
+      
+      scrollbar-width: thin
+      scrollbar-color: #000000
+      
+      div.message
+        color: white
+        user-select: text
+
+        span.user.admin
+          color: red
+
+    form.input
+      position: relative
+      display: flex
+      border-top: $border
+      width: calc(100% + 0.5vh)
+      height: 7.5%
+      margin-top: 0.8vh
+
+      input[type=text]
+        color: white
+        width: calc(100% - 24px)
+        padding: 1.2vh
+        margin: 0
+        outline: none
+        border: none
+        background-color: rgba(0, 0, 0, 0)
+        

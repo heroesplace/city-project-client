@@ -1,9 +1,7 @@
-FROM ghcr.io/devsoleo/statik:main
+FROM nginx:alpine-slim
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/src/app
 
-COPY ./dist ./dist
-
-EXPOSE 3002
-
-CMD [ "npm", "run", "start" ]
+COPY ./dist /usr/share/nginx/html

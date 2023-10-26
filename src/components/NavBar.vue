@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <div  class="menu_button"
+        <div class="menu_button"
             v-for="item in tabs"
             :key="item"
             @click="currentTab = item"
