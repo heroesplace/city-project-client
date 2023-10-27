@@ -28,6 +28,7 @@
                 </div>
                 <div class="submit">
                     <input type="submit" value="S'inscrire"/>
+					<router-link to="/login">Déjà inscrit ?</router-link>
                 </div>
             </form>
         </div>

@@ -15,8 +15,8 @@
     					<input v-model="password" type="password" placeholder="Mot de passe" required />
                     </div>
                     <div class="submit">
-                        <input type="submit" value="Connexion" />
-						<router-link to="/register">Créer ?</router-link>
+                        <input type="submit" value="Se connecter" />
+						<router-link to="/register">Pas encore inscrit ?</router-link>
                     </div>
                 </form>
             </div>
