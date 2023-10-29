@@ -5,9 +5,15 @@
 		<canvas width="496" height="272" id="player"></canvas>
 
 		<div class="user-interface">
-			<Window :title="lg('settings')" id="settings_window" draggable display>
+			<Window :title="lg('settings')" id="settings_window" width="30vw" height="45vh" draggable>
 				<template v-slot:content>
 					<SettingsModule />
+				</template>
+			</Window>
+
+			<Window :title="lg('create_village')" id="village" width="15vw" height="50vh" display draggable>
+				<template v-slot:content>
+					<VillageModule />
 				</template>
 			</Window>
 
@@ -28,6 +34,7 @@ import Window from '../components/Window.vue'
 import SettingsModule from '../modules/SettingsModule.vue'
 import ToolbarModule from '../modules/ToolbarModule.vue'
 import ChatModule from '../modules/ChatModule.vue'
+import VillageModule from '../modules/VillageModule.vue'
 
 document.title = "CityProject"
 

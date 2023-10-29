@@ -2,18 +2,18 @@
     <div class="chat">
         <div class="inner">
             <div class="top">
-                <div class="village">Village</div>
-                <div class="duchy">Duché</div>
+                <div class="world">Monde</div>
+                <!--<div class="duchy">Duché</div>
                 <div class="kingdom">Royaume</div>
                 <div class="empire">Empire</div>
-                <div class="world">Monde</div>
-                <div class="dm">DM</div>
+                <div class="village">Village</div>
+                <div class="dm">DM</div>-->
             </div>
             <div class="messages">
                 <div class="message" 
                     v-for="message in messages_history"
                     :key="message">
-                    <span class="channel">[Monde] </span>
+                    <span class="channel"></span>
                     <span class="user admin">{{ message.author }}</span>
                     <span class="colon"> : </span>
                     <span class="content">{{ message.content }}</span>

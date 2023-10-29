@@ -23,3 +23,7 @@
         VideoSettings
     ]
 </script>
+
+<style type="sass">
+@import "../assets/modules/settings.sass";
+</style>

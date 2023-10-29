@@ -1,5 +1,7 @@
 <template>
     INTERFACE SETTINGS
+
+    <button @click="setFullscreen()">Fullscreen</button>
 </template>
 
 <script>
@@ -15,7 +17,9 @@ export default {
        
     },
     methods: {
-        
+        setFullscreen() {
+            document.documentElement.requestFullscreen()
+        }
     }
 }
 </script>

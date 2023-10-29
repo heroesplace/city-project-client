@@ -3,7 +3,7 @@ import { io } from "socket.io-client"
 export let socket = null
 
 export const init = () => {
-    socket = io("ws://localhost:3001", {
+    socket = io("ws://libertyr0ad.fr:3001", {
         auth: {
             token: document.cookie.split('=')[1]
         }

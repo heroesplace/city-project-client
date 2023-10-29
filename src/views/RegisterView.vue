@@ -72,7 +72,7 @@ export default {
 				})
 			}
 
-			fetch(`http://localhost:3000/api/account/register?=`, options)
+			fetch(`http://libertyr0ad.fr:3000/api/account/register?=`, options)
 				.then(response => response.json())
 				.then(response => {
 					if (response.status == 200) {

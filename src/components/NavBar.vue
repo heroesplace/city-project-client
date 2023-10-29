@@ -1,15 +1,17 @@
 <template>
-    <div class="menu">
-        <div class="menu_button"
-            v-for="item in tabs"
-            :key="item"
-            @click="currentTab = item"
-        >
-            <div>{{ item.name }}</div>
+    <div class="navbar">
+        <div class="menu">
+            <div class="menu_button"
+                v-for="item in tabs"
+                :key="item"
+                @click="currentTab = item"
+            >
+                <div>{{ item.name }}</div>
+            </div>
         </div>
-    </div>
-    <div class="content">
-        <component :is="currentTab"></component>
+        <div class="content">
+            <component :is="currentTab"></component>
+        </div>
     </div>
 </template>
 

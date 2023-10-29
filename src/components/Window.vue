@@ -6,9 +6,7 @@
                 <div class="title" >{{ title }}</div>
                 <div class="close" @click=closeWindow()>✕</div>
             </div>
-            <div class="bottom">
-                <slot name="content"></slot>
-            </div>
+            <slot name="content"></slot>
         </div>
     </div>
 </template>
@@ -20,7 +18,9 @@ export default {
         title: String,
         id: String,
         draggable: Boolean,
-        display: Boolean /* état d'affichage à l'ouverture de l'interface */
+        display: Boolean, /* état d'affichage à l'ouverture de l'interface */
+        width: String,
+        height: String
     },
     setup(props) {},
     mounted() {
@@ -33,6 +33,12 @@ export default {
         if (this.draggable) {
             this.makeWindowDraggable(this.$refs.window, ".top")
         }
+
+        if (this.width && this.height) {
+            console.log(this.width, this.height)
+            this.setWindowSize(this.width, this.height)
+            this.alignWindow("center")
+        }
     },
     methods: {
         closeWindow() {
@@ -43,6 +49,20 @@ export default {
             }
             else {
                 window.style.display = 'none';
+            }
+        },
+        setWindowSize(width, height) {
+            let window = this.$refs.window
+
+            window.style.width = width
+            window.style.height = height
+        },
+        alignWindow(position) {
+            let window = this.$refs.window
+
+            if (position == "center") {
+                window.style.top = "calc(50% - " + window.style.height + " / 2)"
+                window.style.left = "calc(50% - " + window.style.width + " / 2)"
             }
         },
         makeWindowDraggable(windowName, handleName) {
