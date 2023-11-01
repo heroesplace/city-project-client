@@ -4,9 +4,9 @@
         <div class="inner">
             <div class="top">
                 <div class="title" >{{ title }}</div>
-                <div class="close" @click=closeWindow()>✕</div>
+                <div class="close" @click="closeWindow()">✕</div>
             </div>
-            <slot name="content"></slot>
+            <slot></slot>
         </div>
     </div>
 </template>

@@ -12,4 +12,8 @@ export const init = () => {
     socket.on("connect", () => {
         console.log("connected")
     })
+
+    socket.on("server_alert", (al) => {
+        alert(al.message)
+    })
 }
