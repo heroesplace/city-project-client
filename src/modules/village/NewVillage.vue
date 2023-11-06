@@ -5,12 +5,12 @@
     <button @click="invite(member_search)">Inviter</button>
 
     <div v-for="item in members_list" :key="item" >
-        <div>{{ item.character }}</div>
+        <div>{{ item.character_name + " " + item.status }}</div>
     </div>
 </template>
 
 <script setup>
-    import { ref } from "vue"
+    import { ref, onMounted } from "vue"
     import { socket } from "@/api/socket/socket.js"
     import { invite_character } from "@/api/web/invitations.js"
     import lg from '../../locales/lg.js'
@@ -23,6 +23,7 @@
 
         invite_character(character).then((res) => {
             console.log(res)
+            socket.emit("get_invitation_member_list")
         }).catch((err) => {
             console.log(err)
         })
@@ -30,7 +31,14 @@
         member_search.value = ""
     }
 
-    socket.on("invitation_member_list", (data) => {
-        members_list.value = data
+    onMounted(() => {
+        socket.emit("get_invitation_member_list")
     })
+
+
+    socket.on("invitation_member_list", (data) => {
+        members_list.value = data.members_list
+        console.log(data.members_list)
+    })
+
 </script>

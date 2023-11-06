@@ -12,10 +12,10 @@
     import { socket } from "@/api/socket/socket.js";
 
     const accept = () => {
-        socket.emit("reply_to_invitation", { sender: "653e767174c12ce424766570", answer: true })
+        socket.emit("reply_to_invitation", { sender: "654951af36141d20cbe9a1e6", answer: true })
     }
 
     const deny = () => {
-        socket.emit("reply_to_invitation", { sender: "653e767174c12ce424766570", answer: deny })
+        socket.emit("reply_to_invitation", { sender: "654951af36141d20cbe9a1e6", answer: false })
     }
 </script>
