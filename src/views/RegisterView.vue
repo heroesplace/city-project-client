@@ -39,6 +39,8 @@
 <script>
 import router from '../router'
 
+const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+
 export default {
 	data() {
 		return {
@@ -72,7 +74,7 @@ export default {
 				})
 			}
 
-			fetch(`http://libertyr0ad.fr:3000/api/account/register?=`, options)
+			fetch(`http://${ SERVER_ADDRESS }:3000/api/account/register?=`, options)
 				.then(response => response.json())
 				.then(response => {
 					if (response.status == 200) {

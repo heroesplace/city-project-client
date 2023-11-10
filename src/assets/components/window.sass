@@ -3,41 +3,51 @@
 div.window
     display: none
     position: absolute
-    background-color: $background-color
-    padding: $window_padding
+    height: 100%
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    color: white
+    border-radius: 2px
+    text-transform: uppercase
 
-    div.inner
-        border: $border
-        height: 100%
-        box-sizing: border-box
-        display: flex
-        flex-direction: column
-        color: white
-    
-        div.top
-            height: 2vh
-            width: 100%
+    div.top
+        padding: 1.25rem 0.5rem
+        background: rgba(23,24,29,0.85)
+        border: 1px solid #373539
+        border-top: 2px solid #547970
+        border-radius: 0.2vh
+
+        div.title
+            height: 100%
+            width: calc(100% - 1vw)
             display: flex
-            flex-direction: row
-            border-bottom: $border
+            justify-content: flex-start
+            font-size: 1vw
+            font-weight: 300
+            margin: auto
+            cursor: move
+            align-items: center
+            margin-left: 1vw
         
-            div.title
-                height: 100%
-                width: calc(100% - 1vw)
-                display: flex
-                justify-content: center
-                align-items: center
-                cursor: move
-            
-            div.close
-                height: 100%
-                width: 1vw
-                display: flex
-                justify-content: center
-                align-items: center
-                cursor: pointer
-                border-left: $border
-                font-size: 1.2vh
+        div.close
+            height: 100%
+            width: 1vw
+            display: flex
+            justify-content: center
+            align-items: center
+            cursor: pointer
+            border-left: $border
+            font-size: 1.2vh
 
-            div.close:hover
-                background-color: rgba(255, 255, 255, 0.2)
+        div.close:hover
+            background-color: rgba(255, 255, 255, 0.2)
+
+    div.content
+        height: calc(100% - 2vh)
+        margin-top: 0.1rem
+
+        border: 1px solid #373539
+
+        border-radius: 0.2vh
+        background: rgba(23,24,29,0.85)

@@ -1,11 +1,11 @@
 <template>
     <!-- Fenêtre settings -->
     <div :id="id" class="window" ref="window">
-        <div class="inner">
-            <div class="top">
-                <div class="title" >{{ title }}</div>
-                <div class="close" @click="closeWindow()">✕</div>
-            </div>
+        <div class="top">
+            <div class="title">{{ title }}</div>
+            <!--<div class="close" @click="closeWindow()">✕</div>-->
+        </div>
+        <div class="content">
             <slot></slot>
         </div>
     </div>

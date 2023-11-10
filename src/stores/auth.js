@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const SERVER_ADDRESS="libertyr0ad.fr"
+const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 
 export const useAuth = defineStore('auth', {
     state: () => ({

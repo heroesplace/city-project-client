@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+
 export const instance = axios.create({
-    baseURL: 'http://libertyr0ad.fr:3000/api/',
+    baseURL: `http://${ SERVER_ADDRESS }:3000/api/`,
     timeout: 10000,
     withCredentials: true,
     headers: {

@@ -34,12 +34,12 @@
     const new_message = ref('')
 
     function sendMessage() {
-        socket.emit('chat_message', new_message.value)
+        socket.emit('push_chat_message', new_message.value)
         // messages_history.push(new_message.value)
         new_message.value = ""
     }
 
-    socket.on('chat_message', (message) => {
+    socket.on('update_chat_message', (message) => {
         messages_history.value.push(message)
     })
 </script>

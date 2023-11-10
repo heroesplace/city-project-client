@@ -1,3 +1,4 @@
+@import "./variables.sass"
 
 html, body
   height: 100%
@@ -10,10 +11,10 @@ html, body
   /*background: white*/
 
 html
-  background-color: rgba(0, 0, 0, 0.9)
+  background-color: $background-color
 
 html, input, button, select, textarea, a
-  font-family: 'Proxima Nova Condensed', sans-serif
+  font-family: 'Oxanium', sans-serif
   font-size: 1.5vh
 
 .container
@@ -38,3 +39,23 @@ canvas
   image-rendering: pixelated
   width: 100%
   aspect-ratio: 16 / 9
+
+input[type=text],
+input[type=password]
+  color: white
+  border: 1px solid #454549
+  outline: none
+  background: #16171b
+  border-radius: 2px
+
+input[type=button],
+input[type=submit],
+a 
+  background: #242424
+  text-transform: uppercase
+  color: white
+  outline: none
+  border: 1px solid #37373a
+  padding: 1vh 3vh
+  font-weight: 600
+  cursor: pointer

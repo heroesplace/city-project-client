@@ -18,6 +18,6 @@ export function keydownHandler(event, socket) {
 
     // iterate over entities_list
     if (direction != null) {
-       socket.emit('ask_map_part', { "direction": direction })
+       socket.emit('pull_map_part', { "direction": direction })
     }
 }

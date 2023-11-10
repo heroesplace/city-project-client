@@ -1,21 +1,31 @@
 <template>
-    <button @click="accept()">Accepter</button>
-    
-    <div>
-        <span>Invitation de hachneyhev</span>
-        <button @click="accept()">Accepter</button>
-        <button @click="deny()">Refuser</button>
+    <div v-for="item in mail_list" :key="item" >
+        <div>{{ item.sender }}</div>
+        <button @click='accept(item.sender)'>Accepter</button>
+        <button @click='decline(item.sender)'>Refuser</button>
     </div>
 </template>
 
 <script setup>
-    import { socket } from "@/api/socket/socket.js";
+    import { socket } from "@/api/socket/socket.js"
+    import { ref, onMounted } from "vue"
 
-    const accept = () => {
-        socket.emit("reply_to_invitation", { sender: "654951af36141d20cbe9a1e6", answer: true })
+    const mail_list = ref([])
+
+    onMounted(() => {
+        socket.emit("pull_character_mailbox")
+    })
+
+    socket.on("update_character_mailbox", (data) => {
+        mail_list.value = data.mail_list
+        console.log(data.mail_list)
+    })
+
+    const accept = (sender) => {
+        socket.emit("push_invite_reply", { sender: sender, answer: true })
     }
 
-    const deny = () => {
-        socket.emit("reply_to_invitation", { sender: "654951af36141d20cbe9a1e6", answer: false })
+    const decline = (sender) => {
+        socket.emit("push_invite_reply", { sender: sender, answer: false })
     }
 </script>

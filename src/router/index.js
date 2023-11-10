@@ -6,6 +6,8 @@ import GameView from '../views/GameView.vue'
 
 import { useAuth } from '@/stores/auth'
 
+const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

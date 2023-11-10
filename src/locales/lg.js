@@ -13,6 +13,7 @@ const translation = {
         "CHARACTER_NOT_FOUND": "Ce personnage n'existe pas.",
         "SELF_INVITE": "Vous ne pouvez pas vous inviter vous même.",
         "ALREADY_INVITED": "Vous avez déjà invité ce personnage.",
+        "mailbox": "Messagerie"
     }
 }
 

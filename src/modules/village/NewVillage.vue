@@ -23,22 +23,21 @@
 
         invite_character(character).then((res) => {
             console.log(res)
-            socket.emit("get_invitation_member_list")
+            
+            socket.emit("pull_invite_members")
         }).catch((err) => {
-            console.log(err)
+            console.log(lg(err.response.data.code))
         })
 
         member_search.value = ""
     }
 
     onMounted(() => {
-        socket.emit("get_invitation_member_list")
+        socket.emit("pull_invite_members")
     })
 
-
-    socket.on("invitation_member_list", (data) => {
+    socket.on("update_invite_members", (data) => {
         members_list.value = data.members_list
         console.log(data.members_list)
     })
-
 </script>

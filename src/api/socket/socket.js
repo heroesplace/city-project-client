@@ -2,8 +2,10 @@ import { io } from "socket.io-client"
 
 export let socket = null
 
+const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+
 export const init = () => {
-    socket = io("ws://libertyr0ad.fr:3001", {
+    socket = io(`ws://${ SERVER_ADDRESS }:3001`, {
         auth: {
             token: document.cookie.split('=')[1]
         }

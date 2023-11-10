@@ -11,13 +11,13 @@
 				</template>
 			</Window>
 
-			<Window title="test" id="test_window" width="15vw" height="50vh"  draggable>
+			<Window :title="lg('mailbox')" id="test_window" width="15vw" height="50vh"  draggable>
 				<template v-slot:>
 					<MailModule />
 				</template>
 			</Window>
 			
-			<Window :title="lg('create_village')" id="village_window" width="15vw" height="50vh" display draggable>
+			<Window :title="lg('create_village')" id="village_window" width="25vw" height="50vh" display draggable>
 				<template v-slot:>
 					<VillageModule />
 				</template>
@@ -85,7 +85,7 @@ onMounted(() => {
 
 	const map_grid = new MapGrid(engine)
 
-	socket.on('map_part', (data) => {
+	socket.on('pull_map_part', (data) => {
 		console.log("i", data) 
 		map_grid.drawMap(data.map_part)
 	})

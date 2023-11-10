@@ -7,11 +7,11 @@ div.user-interface div.chat
   background-color: $background-color
   height: 40vh
   width: 45vh
-  padding: $window_padding
   overflow-wrap: break-word
-
+  border-top: 2px solid #547971
+  border: 1px solid #373539
+  
   div.inner
-    border: $border
     height: 100%
     box-sizing: border-box
     display: flex
@@ -81,8 +81,11 @@ div.user-interface div.chat
         color: white
         user-select: text
 
+        span.user
+          text-transform: capitalize
+
         span.user.admin
-          color: red
+          color: #16afef
 
     form.input
       position: relative
