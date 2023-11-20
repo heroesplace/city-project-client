@@ -1,29 +1,13 @@
 @import "./variables.sass"
 @import "./fonts.sass"
 
-html, body
-  height: 100%
-  width: 100%
-  margin: 0
-  padding: 0
-  display: flex
-  overflow: hidden
-  user-select: none
-
-html
-  background-color: rgba(0, 0, 0, 0.9)
-
-html, input, button, select, textarea
-  font-family: 'Proxima Nova Condensed', sans-serif
-  font-size: 1.8vh
-
-div.login_box
+div.box
     position: absolute
-    top: calc(50% - 30vh) /* sera toujours parfaitement centré, mettre la moitié de la taille de height */
-    left: calc(50% - 25vh) /* sera toujours parfaitement centré, mettre la moitié de la taille de width */
+    top: calc(50% - 30vh)
+    left: calc(50% - 25vh)
     width: 50vh
 
-    div.login_title
+    div.title
         div.game_icon
             width: 100%
             display: flex
@@ -51,7 +35,7 @@ div.login_box
             text-align: center
             margin-top: 0
     
-    div.login_form
+    div.form
         margin-top: 4vh
 
         form
@@ -59,11 +43,17 @@ div.login_box
             justify-content: space-between
             display: flex
 
-        div.login_line
+        div.input_line
             align-self: center
             height: 6vh
 
-            input[type=text], input[type=password]
+            input[type=text],
+            input[type=email]
+                text-transform: uppercase
+
+            input[type=text],
+            input[type=email],
+            input[type=password]
                 text-align: center
                 margin: auto
                 padding: 1vh
@@ -77,7 +67,7 @@ div.login_box
 
             input[type=submit], a
                 text-decoration: none
-                width: 10vw
+                width: 12vw
                 box-sizing: border-box
                 text-align: center
                 overflow: hidden

@@ -12,28 +12,22 @@
 <script setup>
     import { ref, onMounted } from "vue"
     import { socket } from "@/api/socket/socket.js"
-    import { invite_character } from "@/api/web/invitations.js"
     import lg from '../../locales/lg.js'
 
-    const member_search = ref("")
+    const member_search = ref("zgurt")
     const members_list = ref([])
 
     const invite = (character) => {
         if (character == "") return
 
-        invite_character(character).then((res) => {
-            console.log(res)
-            
-            socket.emit("pull_invite_members")
-        }).catch((err) => {
-            console.log(lg(err.response.data.code))
-        })
+        console.log(character)
+        socket.emit("push_invite_character", character)
 
-        member_search.value = ""
+        // member_search.value = ""
     }
 
     onMounted(() => {
-        socket.emit("pull_invite_members")
+        socket.emit("pull_invite_characters")
     })
 
     socket.on("update_invite_members", (data) => {

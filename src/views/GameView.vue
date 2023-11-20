@@ -5,13 +5,15 @@
 		<canvas width="496" height="272" id="player"></canvas>
 
 		<div class="user-interface">
+
+			<h1 style="color: white">{{ debug_name }}</h1>
 			<Window :title="lg('settings')" id="settings_window" width="30vw" height="45vh" draggable>
 				<template v-slot:>
 					<SettingsModule />
 				</template>
 			</Window>
 
-			<Window :title="lg('mailbox')" id="test_window" width="15vw" height="50vh"  draggable>
+			<Window :title="lg('mailbox')" id="test_window" width="25vw" height="50vh"  draggable>
 				<template v-slot:>
 					<MailModule />
 				</template>
@@ -46,6 +48,7 @@ import MailModule from '../modules/MailModule.vue'
 
 document.title = "CityProject"
 
+
 /*
 let account_name = ref('')
 
@@ -68,7 +71,7 @@ fetch(`http://localhost:3000/api/account/profile?=`, options)
 // Events handling
 
 // Graphics
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import GraphicsEngine from '../game/engine.js'
 import MapGrid from '../game/engine/grid.js'
@@ -76,10 +79,26 @@ import Sprite from '../game/engine/sprite.js'
 
 import { socket, init} from "@/api/socket/socket.js";
 
+
+let debug_name = ref('e')
 init()
 
 onMounted(() => {
 	document.addEventListener("keydown", (event) => keydownHandler(event, socket))
+
+	// DEBUG START
+	function parseJwt (token) {
+		var base64Url = token.split('.')[1];
+		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+		var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+		}).join(''));
+
+		return JSON.parse(jsonPayload);
+	}
+
+	debug_name.value = parseJwt(document.cookie.split(';').find(row => row.startsWith('token')).split('=')[1]).character_name
+	// DEBUG END
 
 	const engine = new GraphicsEngine(socket, document.querySelectorAll('canvas'))
 
