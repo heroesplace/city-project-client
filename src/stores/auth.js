@@ -22,7 +22,7 @@ export const useAuth = defineStore('auth', {
                     }
                 }
 
-                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/logout?=`, options)
+                fetch(`https://${ SERVER_ADDRESS }/api/account/logout?=`, options)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status == 200) {
@@ -50,7 +50,7 @@ export const useAuth = defineStore('auth', {
                     })
                 }
 
-                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/login?=`, options)
+                fetch(`https://${ SERVER_ADDRESS }/api/account/login?=`, options)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status == 200) {
@@ -76,7 +76,7 @@ export const useAuth = defineStore('auth', {
                     }
                 }
                 
-                fetch(`http://${ SERVER_ADDRESS }:3000/api/account/verify-token?=`, options)
+                fetch(`https://${ SERVER_ADDRESS }/api/account/verify-token?=`, options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status == 200) {

@@ -60,7 +60,7 @@ const options = {
 	}
 }
 
-fetch(`http://localhost:3000/api/account/profile?=`, options)
+fetch(`https://localhost/api/account/profile?=`, options)
 .then(response => response.json())
 .then(response => {
 	console.log(response)

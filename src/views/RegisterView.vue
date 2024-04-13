@@ -70,7 +70,7 @@ export default {
 				})
 			}
 
-			fetch(`http://${ SERVER_ADDRESS }:3000/api/account/register?=`, options)
+			fetch(`httpS://${ SERVER_ADDRESS }/api/account/register?=`, options)
 				.then(response => response.json())
 				.then(response => {
 					if (response.status == 200) {

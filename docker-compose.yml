@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  city-project-client:
+    image: e6f78876e
+    container_name: city-project-client
+    ports:
+      - "3000:80"
