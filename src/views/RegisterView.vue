@@ -36,6 +36,7 @@
 import router from '../router'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+const protocol = import.meta.env.MODE === "production" ? "https" : "http"
 
 export default {
 	data() {
@@ -70,7 +71,7 @@ export default {
 				})
 			}
 
-			fetch(`httpS://${ SERVER_ADDRESS }/api/account/register?=`, options)
+			fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/register?=`, options)
 				.then(response => response.json())
 				.then(response => {
 					if (response.status == 200) {

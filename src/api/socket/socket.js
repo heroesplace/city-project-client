@@ -4,8 +4,12 @@ export let socket
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 
+const protocol = import.meta.env.MODE === "production" ? "wss" : "ws"
+
+console.log("prot", protocol)
+
 export const init = () => {
-    socket = io(`wss://${ SERVER_ADDRESS }`, {
+    socket = io(`${ protocol }://${ SERVER_ADDRESS }`, {
         withCredentials: true
     })
 

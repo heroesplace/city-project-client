@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+const protocol = import.meta.env.MODE === "production" ? "https" : "http"
 
 export const useAuth = defineStore('auth', {
     state: () => ({
@@ -22,7 +23,7 @@ export const useAuth = defineStore('auth', {
                     }
                 }
 
-                fetch(`https://${ SERVER_ADDRESS }/api/account/logout?=`, options)
+                fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/logout?=`, options)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status == 200) {
@@ -50,7 +51,7 @@ export const useAuth = defineStore('auth', {
                     })
                 }
 
-                fetch(`https://${ SERVER_ADDRESS }/api/account/login?=`, options)
+                fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/login?=`, options)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status == 200) {
@@ -76,7 +77,7 @@ export const useAuth = defineStore('auth', {
                     }
                 }
                 
-                fetch(`https://${ SERVER_ADDRESS }/api/account/verify-token?=`, options)
+                fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/verify-token?=`, options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status == 200) {
