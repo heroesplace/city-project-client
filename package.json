@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --host --port 3002",
+    "dev": "vite --host --port 3002 --mode development",
     "build": "vite build",
     "preview": "vite build && vite preview --host --port 3002"
   },

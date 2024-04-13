@@ -21,7 +21,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start; 
-        overflow-y: scroll;
+        overflow-y: auto;
         box-sizing: border-box;
         padding: 2%;
     }
@@ -42,6 +42,6 @@
 
     socket.on("update_character_mailbox", (data) => {
         mail_list.value = data.mail_list
-        console.log("invites : ", data.mail_list)
+        // console.log("invites : ", data.mail_list)
     })
 </script>

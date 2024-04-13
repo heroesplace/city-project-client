@@ -1,6 +1,6 @@
 <template>
     <!-- Fenêtre settings -->
-    <div :id="id" class="window" ref="window">
+    <div :id="id" class="window" ref="window" @mousedown="top()" >
         <div class="top">
             <div class="title">{{ title }}</div>
             <!--<div class="close" @click="closeWindow()">✕</div>-->
@@ -35,12 +35,16 @@ export default {
         }
 
         if (this.width && this.height) {
-            console.log(this.width, this.height)
+            // console.log(this.width, this.height)
             this.setWindowSize(this.width, this.height)
             this.alignWindow("center")
         }
     },
     methods: {
+        top() {
+            $(".window").css("z-index", 0)
+            this.$refs.window.style.zIndex = 1;
+        },
         closeWindow() {
             let window = this.$refs.window
 

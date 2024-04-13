@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuth } from '@/stores/auth'
+
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import GameView from '../views/GameView.vue'
-
-import { useAuth } from '@/stores/auth'
-
-const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+import NewCharacterView from '../views/NewCharacterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +26,11 @@ const router = createRouter({
       component: RegisterView
     },
     {
+      path: '/new-character',
+      name: 'new-character',
+      component: NewCharacterView
+    },
+    {
       path: '/game',
       name: 'game',
       component: GameView
@@ -44,9 +48,9 @@ router.beforeEach((to, from, next) => {
   checkToken().then((isAuthenticated) => {
     console.log("[router] isAuthenticated: " + isAuthenticated)
 
-    if (authRequired && !isAuthenticated) {
+    if (authRequired && !isAuthenticated) { // Si la page est privée et que l'utilisateur n'est pas authentifié
       next({ name: 'login' })
-    } else if (!authRequired && isAuthenticated) {
+    } else if (!authRequired && isAuthenticated) { // Si la page est publique et que l'utilisateur est authentifié
       next({ name: 'game' })
     } else {
       next()
