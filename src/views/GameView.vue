@@ -4,7 +4,7 @@
 			<iframe 
 				allow="autoplay; fullscreen *; microphone; camera; midi; xr-spatial-tracking; gamepad; gyroscope; accelerometer; cross-origin-isolated"
 				style="width: 100vw; height: 100vh; border: unset; position: fixed;"
-				src="https://devsoleo.fr/godot/index.html"
+				:src="godot_url"
 				title="Game"></iframe>
 
 			<h1 style="color: white; position: absolute;">{{ debug_name }}</h1>
@@ -21,7 +21,7 @@
 				</template>
 			</Window>
 			
-			<Window :title="lg('create_village')" id="village_window" width="30vw" height="50vh" display draggable>
+			<Window :title="lg('create_village')" id="village_window" width="27vw" height="50vh" display draggable>
 				<template v-slot:>
 					<VillageModule />
 				</template>
@@ -52,7 +52,9 @@ import { ref, onMounted } from 'vue'
 
 import { socket, init} from "@/api/socket/socket.js";
 
-let debug_name = ref('e')
+let debug_name = ref('')
+let godot_url = ref(window.location.origin + "/godot/index.html")
+
 init()
 
 onMounted(() => {

@@ -15,6 +15,9 @@
 					<input v-model="account_name" type="text" name="username" placeholder="INDENTIFIANT" required/>
 				</div>
 				<div class="input_line">
+					<input v-model="character_name" type="text" name="character_name" placeholder="PERSONNAGE" required/>
+				</div>
+				<div class="input_line">
 					<input v-model="email_address" type="email" name="email" placeholder="ADRESSE E-MAIL" required/>
 				</div>
 				<div class="input_line">
@@ -41,11 +44,11 @@ const protocol = import.meta.env.MODE === "production" ? "https" : "http"
 export default {
 	data() {
 		return {
-			account_name: "",
-			character_name: "",
-			email_address: "",
-			password: "",
-			confirm_password: "",
+			account_name: "toto",
+			character_name: "toto",
+			email_address: "t@t.t",
+			password: "salut",
+			confirm_password: "salut",
 		}
 	},
 	methods: {

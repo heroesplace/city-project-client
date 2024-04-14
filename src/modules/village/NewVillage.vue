@@ -73,6 +73,7 @@
         align-items: center;
         font-size: 1rem;
         margin: 0.5vw;
+        cursor: pointer;
     }
 
     div.create_village div.invitation_form div.invitation_list div.invited_member:first-child {
@@ -114,7 +115,7 @@
     }
 
     const cancelInvite = () => {
-        socket.emit("push_invite_remove")
+        socket.emit("push_invite_cancel")
         backToDefault()
     }
 </script>

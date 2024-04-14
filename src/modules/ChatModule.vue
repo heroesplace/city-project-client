@@ -39,7 +39,8 @@
         new_message.value = ""
     }
 
-    socket.on('update_chat_message', (message) => {
+    socket.on('update_chat', (message) => {
+        console.log(message)
         messages_history.value.push(message)
     })
 </script>
