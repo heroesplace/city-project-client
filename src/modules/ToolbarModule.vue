@@ -1,7 +1,7 @@
 <template>
     <div class="toolbar">
         <div class="inner">
-            <div class="tool_button icon-1">
+            <div class="tool_button icon-1" @click="test()">
                 <img src="/svg/character.svg">
             </div>
             <div class="tool_button icon-2">
@@ -28,13 +28,13 @@
 
 <script setup>
 import { useAuth } from '@/stores/auth'
+import { close } from "@/api/socket/socket.js";
 
 const { logout } = useAuth()
 
 function disconnect() {
-    logout().then(() => {
-        window.location.href = "/"
-    })
+    console.log("Disconnecting...")
+    close()
 }
 
 function toggleWindow(windowId) {

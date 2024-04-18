@@ -41,6 +41,7 @@
     })
 
     socket.on("update_character_mailbox", (data) => {
+        console.log(data)
         mail_list.value = data.mail_list
         // console.log("invites : ", data.mail_list)
     })

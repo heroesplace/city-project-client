@@ -100,7 +100,7 @@
     }
 
     onMounted(() => {
-        socket.emit("pull_invite_characters")
+        socket.emit("pull_invite_members")
     })
 
     socket.on("update_invite_members", (data) => {
@@ -115,7 +115,7 @@
     }
 
     const cancelInvite = () => {
-        socket.emit("push_invite_cancel")
+        socket.emit("push_invite_delete")
         backToDefault()
     }
 </script>
