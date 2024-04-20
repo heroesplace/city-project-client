@@ -28,7 +28,8 @@
 
 <script>
 import router from '../router'
-import { useAuth } from '@/stores/auth'
+
+import { login } from '../api/web/auth.js'
 
 export default {
 	data() {
@@ -41,10 +42,8 @@ export default {
 		async login() {
 			const { account_name, password } = this
 
-			const { login } = useAuth()
-
 			await login(account_name, password)
-				.then(() => {
+				.then((token) => {
 					router.push('/game')
 				 })
 				.catch(err => {

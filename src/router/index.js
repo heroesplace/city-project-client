@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuth } from '@/stores/auth'
 
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import GameView from '../views/GameView.vue'
 import NewCharacterView from '../views/NewCharacterView.vue'
+
+import { checkToken } from '../api/web/auth.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,8 +40,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const { checkToken } = useAuth()
-
   const publicPages = ['login', 'register']
 
   const authRequired = !publicPages.includes(to.name)

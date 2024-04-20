@@ -37,6 +37,7 @@
 
 <script>
 import router from '../router'
+import { register } from '../api/web/auth.js'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 const protocol = import.meta.env.MODE === "production" ? "https" : "http"
@@ -48,43 +49,28 @@ export default {
 			character_name: "toto",
 			email_address: "t@t.t",
 			password: "salut",
-			confirm_password: "salut",
+			confirm_password: "salut"
 		}
 	},
 	methods: {
 		async register() {
 			const { account_name, character_name, email_address, password, confirm_password } = this
 
-			if (password != confirm_password) {
-				alert("Les mots de passe ne correspondent pas !")
+			if (password !== confirm_password) {
+				alert("Les mots de passe ne correspondent pas")
 				return
 			}
-
-			const options = {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParams({
-					account_name: account_name,
-                    character_name: character_name,
-                    email_address: email_address,
-                    password: password
+			
+			await register(account_name, character_name, email_address, password)
+				.then(() => {
+					router.push('/login')
+				 })
+				.catch(err => {
+					console.error(err)
 				})
-			}
-
-			fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/register?=`, options)
-				.then(response => response.json())
-				.then(response => {
-					if (response.status == 200) {
-						router.push({ name: 'login' })
-					}
-				})
-				.catch(err => console.error(err))
-			}
 		}
 	}
+}
 </script>
 
 <style lang="scss">

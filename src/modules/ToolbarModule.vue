@@ -27,13 +27,12 @@
 </template>
 
 <script setup>
-import { useAuth } from '@/stores/auth'
 import { close } from "@/api/socket/socket.js";
-
-const { logout } = useAuth()
+import { logout } from '../api/web/auth.js'
 
 function disconnect() {
     console.log("Disconnecting...")
+    logout()
     close()
 }
 

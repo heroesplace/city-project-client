@@ -50,7 +50,9 @@ document.title = "CityProject"
 
 import { ref, onMounted } from 'vue'
 
-import { socket, init} from "@/api/socket/socket.js";
+import { init } from "@/api/socket/socket.js";
+import { jwt_parse } from '../api/web/auth.js'
+
 
 let debug_name = ref('')
 let godot_url = ref(window.location.origin + "/godot/index.html")
@@ -58,20 +60,7 @@ let godot_url = ref(window.location.origin + "/godot/index.html")
 init()
 
 onMounted(() => {
-
-	// DEBUG START
-	function parseJwt (token) {
-		var base64Url = token.split('.')[1];
-		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-		var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-		}).join(''));
-
-		return JSON.parse(jsonPayload);
-	}
-
-	debug_name.value = parseJwt(document.cookie.split(';').find(row => row.startsWith('token')).split('=')[1]).character_name
-	// DEBUG END
+	debug_name.value = jwt_parse(localStorage.getItem('token')).character_name
 })
 </script>
 
