@@ -21,10 +21,8 @@ export const login = async (account_name, password) => {
                 if (response.status == 200) {
                     console.log(response)
 
-                    const token = document.cookie.split("; ").filter((cookie) => {
-                        return cookie.startsWith("token=")
-                    })[0].split("=")[1]
-
+                    const token = response.jwt
+                    
 					localStorage.setItem('token', token)
 
                     resolve(token)
