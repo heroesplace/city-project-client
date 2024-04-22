@@ -10,7 +10,8 @@ const protocol = import.meta.env.MODE === "production" ? "wss" : "ws"
 export const init = () => {
     console.log("Connecting to server")
     socket = io(`${ protocol }://${ SERVER_ADDRESS }`, {
-        query: 'token=' + localStorage.getItem('token')
+        query: 'token=' + localStorage.getItem('token'),
+        reconnection: true
     })
 
     socket.on("connect", () => {

@@ -1,6 +1,6 @@
 <template>
     <div style="height: 100%;" v-if="action == 'create'">
-        <NewVillage  @changeAction="action = $event" />
+        <NewVillage @changeAction="action = $event" />
     </div>
     <div style="height: 100%;" v-else-if="action == 'join'">
         <JoinVillage @changeAction="action = $event" />
@@ -13,8 +13,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted  } from "vue"
-    import { socket } from "@/api/socket/socket.js"
+    import { ref, onMounted, onUnmounted } from "vue"
     
     import NewVillage from "./village/NewVillage.vue"
     import JoinVillage from "./village/JoinVillage.vue"
@@ -22,10 +21,10 @@
     const action = ref("choose")
 
     onMounted(() => {
-        socket.emit("pull_has_invite")
+        console.log("Village mounted")
     })
 
-    socket.on('update_has_invite', (has_invite) => {
-        action.value = has_invite ? 'create' : 'choose'
+    onUnmounted(() => {
+        console.log("Village unmounted")
     })
 </script>

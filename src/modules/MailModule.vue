@@ -29,7 +29,7 @@
 
 <script setup>
     import { socket } from "@/api/socket/socket.js"
-    import { ref, onMounted } from "vue"
+    import { ref, onMounted, onUnmounted } from "vue"
 
     import InviteMail from "./mail/InviteMail.vue"
     import NoMail from "./mail/NoMail.vue"
@@ -38,11 +38,16 @@
 
     onMounted(() => {
         socket.emit("pull_character_mailbox")
+
+        socket.on("update_character_mailbox", (data) => {
+            console.log(data)
+            mail_list.value = data.mail_list
+            // console.log("invites : ", data.mail_list)
+        })
     })
 
-    socket.on("update_character_mailbox", (data) => {
-        console.log(data)
-        mail_list.value = data.mail_list
-        // console.log("invites : ", data.mail_list)
+    onUnmounted(() => {
+        socket.off("update_character_mailbox")
     })
+
 </script>

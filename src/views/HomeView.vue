@@ -1,3 +1,3 @@
 <template>
-    <router-link to="/game">Jouer</router-link>
+    <a href="/game">Jouer</a>
 </template>

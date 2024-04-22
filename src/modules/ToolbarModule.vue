@@ -7,16 +7,22 @@
             <div class="tool_button icon-2">
                 <img src="/svg/bag.svg">
             </div>
-            <div class="tool_button icon-3">3</div>
-            <div class="tool_button icon-4">4</div>
-            <div class="tool_button icon-5" @click="toggleWindow('village_window')">
+            <div class="tool_button icon-3">
+                3
+            </div>
+            <div class="tool_button icon-4">
+                4
+            </div>
+            <div class="tool_button icon-5" @click="tw('village')">
                 <img src="/svg/shield.svg">
             </div>
-            <div class="tool_button icon-6" @click="toggleWindow('test_window')">🧪</div>
+            <div class="tool_button icon-6" @click="tw('mailbox')">
+                M
+            </div>
             <div class="tool_button icon-7">
                 <img src="/svg/discord.svg">
             </div>
-            <div class="tool_button icon-8" @click="toggleWindow('settings_window')">
+            <div class="tool_button icon-8" @click="tw('settings')">
                 <img src="/svg/settings.svg">
             </div>
             <div class="tool_button icon-9" @click="disconnect()">
@@ -26,24 +32,25 @@
     </div>
 </template>
 
-<script setup>
+<script>
 import { close } from "@/api/socket/socket.js";
 import { logout } from '../api/web/auth.js'
 
-function disconnect() {
-    console.log("Disconnecting...")
-    logout()
-    close()
-}
-
-function toggleWindow(windowId) {
-    let window = document.querySelector("#" + windowId + ".window")
-
-    if (window.style.display == '' || window.style.display == 'none') {
-        window.style.display = 'block';
-    }
-    else {
-        window.style.display = 'none';
+export default {
+    name: 'Window',
+    props: {
+        toggleWindow: Function
+    },
+    methods: {
+        disconnect() {
+            console.log("Disconnecting...")
+            logout()
+            close()
+            router.push({ name: 'login' })
+        },
+        tw(window) {
+            this.toggleWindow(window)
+        }
     }
 }
 </script>

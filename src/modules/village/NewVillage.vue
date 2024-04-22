@@ -30,7 +30,7 @@
             <input type="text" maxlength=50 placeholder="Nom du village... (50 chararactères max.)" />
             <button @click="">Créer</button>
             ou
-            <button @click="cancelInvite">Annuler</button>
+            <button @click="cancel">Annuler</button>
         </div>
     </div>
 </template>
@@ -82,40 +82,41 @@
 </style>
 
 <script setup>
-    import { ref, onMounted, defineEmits } from "vue"
+    import { ref, defineEmits, onMounted, onUnmounted } from "vue"
     import { socket } from "@/api/socket/socket.js"
 
-    import lg from '../../locales/lg.js'
+    import { jwt_parse } from "@/api/web/auth.js"
 
     const member_search = ref("")
     const members_list = ref([])
+    const emits = defineEmits(['changeAction'])
 
     const invite = (character) => {
         if (character == "") return
 
-        // console.log(character)
         socket.emit("push_invite_character", character)
+    }
 
-        // member_search.value = ""
+    const cancel = () => {
+        socket.emit("push_invite_delete")
+        
+        emits('changeAction', 'choose')
     }
 
     onMounted(() => {
         socket.emit("pull_invite_members")
+        console.log("New village mounted")
+
+        socket.on("update_invite_members", (data) => {
+            members_list.value = data.members_list
+
+            members_list.value.unshift({ character_name: jwt_parse(localStorage.getItem('token')).character_name, status: 3 })
+        })
     })
 
-    socket.on("update_invite_members", (data) => {
-        members_list.value = data.members_list
-        console.log(data.members_list)
+    onUnmounted(() => {
+        console.log("New village unmounted")
+
+        socket.off("update_invite_members")
     })
-
-    const emits = defineEmits(['changeAction'])
-
-    const backToDefault = () => {
-        emits('changeAction', 'choose')
-    }
-
-    const cancelInvite = () => {
-        socket.emit("push_invite_delete")
-        backToDefault()
-    }
 </script>

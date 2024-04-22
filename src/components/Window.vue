@@ -18,18 +18,11 @@ export default {
         title: String,
         id: String,
         draggable: Boolean,
-        display: Boolean, /* état d'affichage à l'ouverture de l'interface */
         width: String,
         height: String
     },
     setup(props) {},
     mounted() {
-        if (this.display) {
-            this.$refs.window.style.display = 'block';
-        } else {
-            this.$refs.window.style.display = 'none';
-        }
-
         if (this.draggable) {
             this.makeWindowDraggable(this.$refs.window, ".top")
         }
@@ -44,16 +37,6 @@ export default {
         top() {
             $(".window").css("z-index", 0)
             this.$refs.window.style.zIndex = 1;
-        },
-        closeWindow() {
-            let window = this.$refs.window
-
-            if (window.style.display == '' || window.style.display == 'none') {
-                window.style.display = 'block';
-            }
-            else {
-                window.style.display = 'none';
-            }
         },
         setWindowSize(width, height) {
             let window = this.$refs.window
