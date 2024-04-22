@@ -8,8 +8,15 @@
                 <button @click="invite(member_search)">Inviter</button>
             </div>
             <div class="invitation_list">
+                <div class="invited_member">
+                    <span>{{ character_name }}</span>
+                    <span>
+                        <img alt="Leader" src="/png/crown_a.png" />
+                    </span>
+                </div>
+
                 <div class="invited_member" v-for="item in members_list" :key="item">
-                    <span>{{ item.character_name}}</span>
+                    <span>{{ item.character_name }}</span>
                     <span v-if="item.status == 0">
                         <img alt="Pending invitation" src="/png/hourglass.png" />
                     </span>
@@ -18,9 +25,6 @@
                     </span>
                     <span v-else-if="item.status == 2">
                         <img alt="Pending invitation" src="/png/suit_hearts_broken.png" />
-                    </span>
-                    <span v-else>
-                        <img alt="Pending invitation" src="/png/crown_a.png" />
                     </span>
                 </div>
             </div>
@@ -89,6 +93,7 @@
 
     const member_search = ref("")
     const members_list = ref([])
+    const character_name = jwt_parse(localStorage.getItem('token')).character_name
     const emits = defineEmits(['changeAction'])
 
     const invite = (character) => {
@@ -109,8 +114,6 @@
 
         socket.on("update_invite_members", (data) => {
             members_list.value = data.members_list
-
-            members_list.value.unshift({ character_name: jwt_parse(localStorage.getItem('token')).character_name, status: 3 })
         })
     })
 
