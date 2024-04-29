@@ -31,6 +31,8 @@ import router from '../router'
 
 import { login } from '../api/web/auth.js'
 
+localStorage.setItem('token', '')
+
 export default {
 	data() {
 		return {
