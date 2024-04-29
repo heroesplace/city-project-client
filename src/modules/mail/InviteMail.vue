@@ -89,10 +89,10 @@
         },
         methods: {
             accept(sender) {
-                socket.emit("push_invite_reply", { sender: sender, answer: true })
+                socket.emit("invite_reply", { sender: sender, answer: true })
             },
             decline(sender) {
-                socket.emit("push_invite_reply", { sender: sender, answer: false })
+                socket.emit("invite_reply", { sender: sender, answer: false })
             }
         }
     })

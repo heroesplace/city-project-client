@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 import Window from '../components/Window.vue'
 
@@ -47,7 +47,7 @@ import MailModule from '../modules/MailModule.vue'
 
 import lg from '../locales/lg.js'
 
-import { init } from "@/api/socket/socket.js";
+import { init, close } from "@/api/socket/socket.js";
 import { jwt_parse } from '../api/web/auth.js'
 
 const isVillageWindow = ref(false)
@@ -58,8 +58,6 @@ const debug_name = ref('')
 const godot_url = ref(window.location.origin + "/godot/index.html")
 
 document.title = "CityProject"
-
-init()
 
 function toggleWindow(window) {
 	switch (window) {
@@ -75,8 +73,15 @@ function toggleWindow(window) {
 	}
 }
 
+init()
+
 onMounted(() => {
 	debug_name.value = jwt_parse(localStorage.getItem('token')).character_name
+})
+
+onUnmounted(() => {
+	console.log("Unmounting GameView")
+	close()
 })
 </script>
 

@@ -24,7 +24,7 @@ export const init = () => {
 
     socket.on("disconnect", () => {
         console.log("disconnected")
-        router.push('/')
+        router.push('/login')
     })
 }
 

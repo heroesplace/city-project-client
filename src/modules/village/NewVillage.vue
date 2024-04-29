@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="invited_member" v-for="item in members_list" :key="item">
-                    <span>{{ item.character_name }}</span>
+                    <span>{{ item.name }}</span>
                     <span v-if="item.status == 0">
                         <img alt="Pending invitation" src="/png/hourglass.png" />
                     </span>
@@ -99,20 +99,22 @@
     const invite = (character) => {
         if (character == "") return
 
-        socket.emit("push_invite_character", character)
+        socket.emit("invite_add_character", character)
     }
 
     const cancel = () => {
-        socket.emit("push_invite_delete")
+        if (confirm("Voulez-vous vraiment annuler la création du village ?") == false) return
+
+        socket.emit("invite_cancel")
         
         emits('changeAction', 'choose')
     }
 
     onMounted(() => {
-        socket.emit("pull_invite_members")
+        socket.emit("invite_pull_characters")
         console.log("New village mounted")
 
-        socket.on("update_invite_members", (data) => {
+        socket.on("invite_pull_characters", (data) => {
             members_list.value = data.members_list
         })
     })
@@ -120,6 +122,6 @@
     onUnmounted(() => {
         console.log("New village unmounted")
 
-        socket.off("update_invite_members")
+        socket.off("invite_pull_characters")
     })
 </script>

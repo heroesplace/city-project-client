@@ -1,7 +1,7 @@
 <template>
     <div class="toolbar">
         <div class="inner">
-            <div class="tool_button icon-1" @click="test()">
+            <div class="tool_button icon-1">
                 <img src="/svg/character.svg">
             </div>
             <div class="tool_button icon-2">
@@ -35,6 +35,7 @@
 <script>
 import { close } from "@/api/socket/socket.js";
 import { logout } from '../api/web/auth.js'
+import router from '../router/index.js'
 
 export default {
     name: 'Window',
