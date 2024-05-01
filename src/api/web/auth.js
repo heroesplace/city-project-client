@@ -1,5 +1,16 @@
+import router from "../../router/"
+import { close } from "@/api/socket/socket.js";
+
 const protocol = import.meta.env.MODE === "production" ? "https" : "http"
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
+
+export const logout = () => {
+    close()
+    
+    localStorage.removeItem('token')
+
+    router.go('/login')
+}
 
 export const login = async (account_name, password) => {
     return new Promise((resolve, reject) => {
@@ -91,9 +102,6 @@ export const checkToken = async () => {
     })
 }
 
-export const logout = async () => {
-    localStorage.removeItem('token')
-}
 
 // Move later in a user.js file
 

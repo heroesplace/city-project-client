@@ -31,8 +31,8 @@
         </div>
         <div>
             <h3>Créer un village</h3>
-            <input type="text" maxlength=50 placeholder="Nom du village... (50 chararactères max.)" />
-            <button @click="">Créer</button>
+            <input type="text" v-model="village_name" maxlength=50 placeholder="Nom du village... (20 caractères max.)" />
+            <button @click="create_village">Créer</button>
             ou
             <button @click="cancel">Annuler</button>
         </div>
@@ -96,6 +96,8 @@
     const character_name = jwt_parse(localStorage.getItem('token')).character_name
     const emits = defineEmits(['changeAction'])
 
+    const village_name = ref("")
+
     const invite = (character) => {
         if (character == "") return
 
@@ -103,11 +105,15 @@
     }
 
     const cancel = () => {
-        if (confirm("Voulez-vous vraiment annuler la création du village ?") == false) return
+        if (!confirm("Voulez-vous vraiment annuler la création du village ?")) return
 
         socket.emit("invite_cancel")
         
         emits('changeAction', 'choose')
+    }
+
+    const create_village = () => {
+        socket.emit("village_create", { name: village_name.value })
     }
 
     onMounted(() => {

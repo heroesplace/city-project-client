@@ -33,9 +33,7 @@
 </template>
 
 <script>
-import { close } from "@/api/socket/socket.js";
 import { logout } from '../api/web/auth.js'
-import router from '../router/index.js'
 
 export default {
     name: 'Window',
@@ -47,7 +45,6 @@ export default {
             console.log("Disconnecting...")
             logout()
             close()
-            router.push({ name: 'login' })
         },
         tw(window) {
             this.toggleWindow(window)

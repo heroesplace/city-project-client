@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-import router from "../../router/"
+import { logout } from '../web/auth.js'
 
 export let socket
 
@@ -23,8 +23,9 @@ export const init = () => {
     })
 
     socket.on("disconnect", () => {
-        console.log("disconnected")
-        router.push('/login')
+        console.log("disconnected here")
+
+        logout()
     })
 }
 
