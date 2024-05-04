@@ -1,11 +1,7 @@
 <template>
     <div class="container">
 		<div class="user-interface">
-			<iframe 
-				allow="autoplay; fullscreen *; microphone; camera; midi; xr-spatial-tracking; gamepad; gyroscope; accelerometer; cross-origin-isolated"
-				style="width: 100vw; height: 100vh; border: unset; position: fixed;"
-				:src="godot_url"
-				title="Game"></iframe>
+			<GameModule />
 
 			<Window v-if="isSettingsWindow" :title="lg('settings')" id="settings_window" width="30vw" height="45vh" draggable>
 				<template v-slot:>
@@ -44,6 +40,8 @@ import ToolbarModule from '../modules/ToolbarModule.vue'
 import ChatModule from '../modules/ChatModule.vue'
 import VillageModule from '../modules/VillageModule.vue'
 import MailModule from '../modules/MailModule.vue'
+
+import GameModule from '../modules/GameModule.vue'
 
 import lg from '../locales/lg.js'
 

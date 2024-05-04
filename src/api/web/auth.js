@@ -27,19 +27,21 @@ export const login = async (account_name, password) => {
         }
 
         fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/login?=`, options)
-            .then(response => response.json())
+            .then(res => {
+                if (res.ok) return res.json()
+                  
+                return res.json().then(text => { 
+                    throw new Error(text.message) 
+                })
+            })
             .then(response => {
-                if (response.status == 200) {
-                    console.log(response)
+                console.log(response)
 
-                    const token = response.jwt
-                    
-					localStorage.setItem('token', token)
+                const token = response.jwt
+                
+                localStorage.setItem('token', token)
 
-                    resolve(token)
-                } else {
-                    reject(new Error('Login failed'))
-                }
+                resolve(token)
             })
             .catch(err => reject(err))
     })
@@ -62,11 +64,12 @@ export const register = async (account_name, character_name, email_address, pass
         }
 
         fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/register?=`, options)
-            .then(response => response.json())
-            .then(response => {
-                if (response.status == 200) {
-                    resolve()
-                }
+            .then(res => {
+                if (res.ok) resolve()
+                
+                return res.json().then(text => { 
+                    throw new Error(text.message) 
+                })
             })
             .catch(err => reject(err))
     })
@@ -88,17 +91,17 @@ export const checkToken = async () => {
         }
         
         fetch(`${ protocol }://${ SERVER_ADDRESS }/api/account/verify-token?=`, options)
-        .then(response => response.json())
+        .then(res => {
+            if (res.ok) return res.json()
+              
+            return res.json().then(text => { 
+                throw new Error(text.message) 
+            })
+        })
         .then(response => {
-            if (response.status == 200) {
-                resolve(true)
-            } else {
-                reject(new Error('Token is not valid'))
-            }
+            resolve(true)
         })
-        .catch(err => {
-            reject(err)
-        })
+        .catch(err => reject(err))
     })
 }
 

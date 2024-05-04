@@ -1,5 +1,6 @@
 <template>
-    SOCIAL SETTINGS
+<div id="info">Hoi!</div>
+<a id="login" href="https://discord.com/oauth2/authorize?client_id=1144418040251961367&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fdiscord&scope=identify">Identify Yourself</a>
 </template>
 
 <script>

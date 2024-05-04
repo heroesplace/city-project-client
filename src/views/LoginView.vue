@@ -44,12 +44,13 @@ export default {
 
 			await login(account_name, password)
 				.then((token) => {
-					router.push('/game')
+					console.log("ici", token)
+					router.go('/game')
 				 })
 				.catch(err => {
 					console.error(err)
 
-					alert("Identifiant ou mot de passe incorrect")
+					alert(err.message)
 				})
 		}
 	}
