@@ -12,7 +12,7 @@
 		<div class="form">
 			<form @submit.prevent="login">
 				<div class="input_line">
-					<input v-model="account_name" type="text" name="account_name" placeholder="IDENTIFIANT" required />
+					<input v-model="accountName" type="text" name="accountName" placeholder="IDENTIFIANT" required />
 				</div>
 				<div class="input_line">
 					<input v-model="password" type="password" placeholder="MOT DE PASSE" required />
@@ -34,15 +34,15 @@ import { login } from '../api/web/auth.js'
 export default {
 	data() {
 		return {
-			account_name: "",
+			accountName: "",
 			password: ""
 		}
 	},
 	methods: {
 		async login() {
-			const { account_name, password } = this
+			const { accountName, password } = this
 
-			await login(account_name, password)
+			await login(accountName, password)
 				.then((token) => {
 					console.log("ici", token)
 					router.go('/game')

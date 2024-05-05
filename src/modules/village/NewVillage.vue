@@ -9,7 +9,7 @@
             </div>
             <div class="invitation_list">
                 <div class="invited_member">
-                    <span>{{ character_name }}</span>
+                    <span>{{ characterName }}</span>
                     <span>
                         <img alt="Leader" src="/png/crown_a.png" />
                     </span>
@@ -93,7 +93,7 @@
 
     const member_search = ref("")
     const members_list = ref([])
-    const character_name = jwt_parse(localStorage.getItem('token')).character_name
+    const characterName = jwt_parse(localStorage.getItem('token')).characterName
     const emits = defineEmits(['changeAction'])
 
     const village_name = ref("")

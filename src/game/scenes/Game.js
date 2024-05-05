@@ -12,25 +12,7 @@ export class Game extends Scene
         this.player = undefined;
         this.cursors = undefined;
 
-        this.fullMap = [[126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 149],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 149, 196],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 149, 196, 174],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 173, 174, 174],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 173, 174, 174],
-                        [126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 173, 174, 174],
-                        [126, 126, 149, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 126, 150, 150, 150, 150, 150, 151, 126, 126, 126, 126, 173, 174, 174],
-                        [126, 126, 173, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 175, 126, 126, 126, 126, 197, 172, 174],
-                        [126, 126, 173, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 175, 126, 126, 126, 126, 126, 197, 172],
-                        [126, 126, 173, 174, 174, 171, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 198, 199, 126, 126, 126, 126, 126, 126, 197],
-                        [126, 126, 173, 174, 174, 175, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 173, 174, 174, 175, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 173, 174, 174, 175, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 173, 174, 174, 175, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126, 126],
-                        [126, 126, 173, 174, 174, 195, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150]
-        ]
+        this.mapFrame = []
     }
 
     preload ()
@@ -105,17 +87,6 @@ export class Game extends Scene
       
         this.cursors = this.input.keyboard.createCursorKeys();
       
-        // Help text that has a "fixed" position on the screen
-        this.add
-          .text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
-            font: "18px monospace",
-            fill: "#000000",
-            padding: { x: 20, y: 10 },
-            backgroundColor: "#ffffff"
-          })
-          .setScrollFactor(0)
-          .setDepth(30);
-      
         // Debug graphics
         this.input.keyboard.once("keydown-D", event => {
           // Turn on physics debugging to show player's hitbox
@@ -133,57 +104,65 @@ export class Game extends Scene
           });
         });
 
-        this.cursors.right.on("down", () => socket.emit("move", { direction: "right" }))
-        this.cursors.left.on("down", () => socket.emit("move", { direction: "left" }))
-        this.cursors.up.on("down", () => socket.emit("move", { direction: "up" }))
-        this.cursors.down.on("down", () => socket.emit("move", { direction: "down" }))
+        this.cursors.right.on("down", () => socket.emit("character_move", { direction: "right" }))
+        this.cursors.left.on("down", () => socket.emit("character_move", { direction: "left" }))
+        this.cursors.up.on("down", () => socket.emit("character_move", { direction: "up" }))
+        this.cursors.down.on("down", () => socket.emit("character_move", { direction: "down" }))
 
         EventBus.emit('current-scene-ready', this)
 
-        socket.on("move", (data) => {
+        socket.emit("character_spawn")
+
+        socket.on("character_spawn", ({ map_frame }) => {
+            this.mapFrame = map_frame
+
+            belowLayer.putTilesAt(this.mapFrame, 0, 0)
+        })
+
+        socket.on("character_move", (data) => {
             const { direction, map_part } = data
 
             if (direction === 'right') {
                 // ADD ROW TO THE RIGHT
-                this.fullMap.forEach((row, index) => {
-                    this.fullMap[index].push(map_part[index])
+                this.mapFrame.forEach((row, index) => {
+                    this.mapFrame[index].push(map_part[index])
                 })
 
                 // REMOVE FIRST ROW
-                this.fullMap.forEach((row, index) => {
-                    this.fullMap[index].shift()
+                this.mapFrame.forEach((row, index) => {
+                    this.mapFrame[index].shift()
                 })
             }
 
             if (direction === 'left') {
                 // ADD ROW TO THE LEFT
-                this.fullMap.forEach((row, index) => {
-                    this.fullMap[index].unshift(map_part[index])
+                this.mapFrame.forEach((row, index) => {
+                    this.mapFrame[index].unshift(map_part[index])
                 })
 
                 // REMOVE LAST ROW
-                this.fullMap.forEach((row, index) => {
-                    this.fullMap[index].pop()
+                this.mapFrame.forEach((row, index) => {
+                    this.mapFrame[index].pop()
                 })
             }
 
             if (direction === 'up') {
                 // ADD ROW TO THE TOP
-                this.fullMap.unshift(map_part[0])
+                this.mapFrame.unshift(map_part[0])
 
                 // REMOVE LAST ROW
-                this.fullMap.pop()
+                this.mapFrame.pop()
             }
 
             if (direction === 'down') {
                 // ADD ROW TO THE BOTTOM
-                this.fullMap.push(map_part[0])
+                this.mapFrame.push(map_part[0])
 
                 // REMOVE FIRST ROW
-                this.fullMap.shift()
+                this.mapFrame.shift()
             }
 
-            belowLayer.putTilesAt(this.fullMap, 0, 0)
+            belowLayer.putTilesAt(this.mapFrame, 0, 0)
         })
       }
 

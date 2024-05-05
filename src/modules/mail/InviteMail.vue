@@ -6,7 +6,7 @@
             </svg>
         </div>
         <div class="message">
-            <span>{{ item.sender.character_name }} vous invite à fonder un village !</span>
+            <span>{{ item.sender.characterName }} vous invite à fonder un village !</span>
         </div>
         <div class="buttons">
             <button @click='accept(item.sender._id)'>A</button>

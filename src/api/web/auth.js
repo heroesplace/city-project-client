@@ -12,7 +12,7 @@ export const logout = () => {
     router.go('/login')
 }
 
-export const login = async (account_name, password) => {
+export const login = async (accountName, password) => {
     return new Promise((resolve, reject) => {
         const options = {
             method: 'POST',
@@ -21,7 +21,7 @@ export const login = async (account_name, password) => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                account_name: account_name,
+                accountName: accountName,
                 password: password,
             })
         }
@@ -47,7 +47,7 @@ export const login = async (account_name, password) => {
     })
 }
 
-export const register = async (account_name, character_name, email_address, password) => {
+export const register = async (accountName, characterName, emailAddress, password) => {
     return new Promise((resolve, reject) => {
         const options = {
             method: 'POST',
@@ -56,9 +56,9 @@ export const register = async (account_name, character_name, email_address, pass
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                account_name: account_name,
-                character_name: character_name,
-                email_address: email_address,
+                accountName: accountName,
+                characterName: characterName,
+                emailAddress: emailAddress,
                 password: password
             })
         }

@@ -12,19 +12,19 @@
 		<div class="form">
 			<form @submit.prevent="register">
 				<div class="input_line">
-					<input v-model="account_name" type="text" name="username" placeholder="INDENTIFIANT" required/>
+					<input v-model="accountName" type="text" name="accountName" placeholder="INDENTIFIANT" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="character_name" type="text" name="character_name" placeholder="PERSONNAGE" required/>
+					<input v-model="characterName" type="text" name="characterName" placeholder="PERSONNAGE" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="email_address" type="email" name="email" placeholder="ADRESSE E-MAIL" required/>
+					<input v-model="emailAddress" type="email" name="emailAddress" placeholder="ADRESSE E-MAIL" required/>
 				</div>
 				<div class="input_line">
 					<input v-model="password" type="password" name="password" placeholder="MOT DE PASSE" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="confirm_password" type="password" name="confirm_password" placeholder="CONFIRMATION" required/>
+					<input v-model="confirmPassword" type="password" name="confirmPassword" placeholder="CONFIRMATION" required/>
 				</div>
 				<div class="submit">
 					<input type="submit" value="S'inscrire"/>
@@ -45,23 +45,23 @@ const protocol = import.meta.env.MODE === "production" ? "https" : "http"
 export default {
 	data() {
 		return {
-			account_name: "toto",
-			character_name: "toto",
-			email_address: "t@t.t",
+			accountName: "toto",
+			characterName: "toto",
+			emailAddress: "t@t.t",
 			password: "salut",
-			confirm_password: "salut"
+			confirmPassword: "salut"
 		}
 	},
 	methods: {
 		async register() {
-			const { account_name, character_name, email_address, password, confirm_password } = this
+			const { accountName, characterName, emailAddress, password, confirmPassword } = this
 
-			if (password !== confirm_password) {
+			if (password !== confirmPassword) {
 				alert("Les mots de passe ne correspondent pas")
 				return
 			}
 			
-			await register(account_name, character_name, email_address, password)
+			await register(accountName, characterName, emailAddress, password)
 				.then(() => {
 					router.push('/login')
 				 })

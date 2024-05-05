@@ -74,7 +74,7 @@ function toggleWindow(window) {
 init()
 
 onMounted(() => {
-	debug_name.value = jwt_parse(localStorage.getItem('token')).character_name
+	debug_name.value = jwt_parse(localStorage.getItem('token')).characterName
 })
 
 onUnmounted(() => {
