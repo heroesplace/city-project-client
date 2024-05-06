@@ -35,7 +35,6 @@
 
     function sendMessage() {
         socket.emit('push_chat_message', new_message.value)
-        // messages_history.push(new_message.value)
         new_message.value = ""
     }
 

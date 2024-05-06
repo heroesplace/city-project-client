@@ -25,7 +25,7 @@
     const action = ref("choose")
 
     onMounted(() => {
-        console.log("Village mounted")
+        console.log("[vue] Village mounted")
 
         socket.emit('chracter_is_villager')
 
@@ -35,6 +35,6 @@
     })
 
     onUnmounted(() => {
-        console.log("Village unmounted")
+        console.log("[vue] Village unmounted")
     })
 </script>

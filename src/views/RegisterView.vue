@@ -61,13 +61,11 @@ export default {
 				return
 			}
 			
-			await register(accountName, characterName, emailAddress, password)
-				.then(() => {
-					router.push('/login')
-				 })
-				.catch(err => {
-					console.error(err)
-				})
+			await register(accountName, characterName, emailAddress, password).then(() => {
+				router.push('/login')
+			}).catch(err => {
+				console.error(err)
+			})
 		}
 	}
 }

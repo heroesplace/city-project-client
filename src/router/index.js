@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.name)
 
   checkToken().then((isAuthenticated) => {
-    console.log("[router] isAuthenticated: " + isAuthenticated)
+    console.log('[router] isAuthenticated: ' + isAuthenticated)
 
     if (authRequired && !isAuthenticated) { // Si la page est privée et que l'utilisateur n'est pas authentifié
       next({ name: 'login' })

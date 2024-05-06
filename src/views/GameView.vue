@@ -32,21 +32,21 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-import Window from '../components/Window.vue'
+import Window from '@/components/Window.vue'
 
-import SettingsModule from '../modules/SettingsModule.vue'
-import ToolbarModule from '../modules/ToolbarModule.vue'
+import SettingsModule from '@/modules/SettingsModule.vue'
+import ToolbarModule from '@/modules/ToolbarModule.vue'
 
-import ChatModule from '../modules/ChatModule.vue'
-import VillageModule from '../modules/VillageModule.vue'
-import MailModule from '../modules/MailModule.vue'
+import ChatModule from '@/modules/ChatModule.vue'
+import VillageModule from '@/modules/VillageModule.vue'
+import MailModule from '@/modules/MailModule.vue'
 
-import GameModule from '../modules/GameModule.vue'
+import GameModule from '@/modules/GameModule.vue'
 
-import lg from '../locales/lg.js'
+import lg from '@/locales/lg.js'
 
-import { init, close } from "@/api/socket/socket.js";
-import { jwt_parse } from '../api/web/auth.js'
+import { socket } from "@/api/socket/socket.js";
+import { jwt_parse } from '@/api/web/auth.js'
 
 const isVillageWindow = ref(false)
 const isSettingsWindow = ref(false)
@@ -54,8 +54,6 @@ const isMailboxWindow = ref(false)
 
 const debug_name = ref('')
 const godot_url = ref(window.location.origin + "/godot/index.html")
-
-document.title = "CityProject"
 
 function toggleWindow(window) {
 	switch (window) {
@@ -71,15 +69,14 @@ function toggleWindow(window) {
 	}
 }
 
-init()
-
 onMounted(() => {
+	document.title = "CityProject"
 	debug_name.value = jwt_parse(localStorage.getItem('token')).characterName
 })
 
 onUnmounted(() => {
 	console.log("Unmounting GameView")
-	close()
+	socket.close()
 })
 </script>
 

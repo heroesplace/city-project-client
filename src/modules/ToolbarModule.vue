@@ -2,10 +2,10 @@
     <div class="toolbar">
         <div class="inner">
             <div class="tool_button icon-1">
-                <img src="/svg/character.svg">
+                <img alt="character" src="/svg/character.svg">
             </div>
             <div class="tool_button icon-2">
-                <img src="/svg/bag.svg">
+                <img alt="bag" src="/svg/bag.svg">
             </div>
             <div class="tool_button icon-3">
                 3
@@ -14,19 +14,19 @@
                 4
             </div>
             <div class="tool_button icon-5" @click="tw('village')">
-                <img src="/svg/shield.svg">
+                <img alt="village" src="/svg/shield.svg">
             </div>
             <div class="tool_button icon-6" @click="tw('mailbox')">
                 M
             </div>
             <div class="tool_button icon-7">
-                <img src="/svg/discord.svg">
+                <img alt="discord" src="/svg/discord.svg">
             </div>
             <div class="tool_button icon-8" @click="tw('settings')">
-                <img src="/svg/settings.svg">
+                <img alt="settings" src="/svg/settings.svg">
             </div>
             <div class="tool_button icon-9" @click="disconnect()">
-                <img src="/svg/disconnect.svg">
+                <img alt="" src="/svg/disconnect.svg">
             </div>
         </div>
     </div>

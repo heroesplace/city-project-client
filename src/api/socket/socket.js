@@ -1,34 +1,26 @@
-import { io } from "socket.io-client"
+import { io } from 'socket.io-client'
 import { logout } from '../web/auth.js'
-
-export let socket
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 
-const protocol = import.meta.env.MODE === "production" ? "wss" : "ws"
+const protocol = import.meta.env.MODE === 'production' ? 'wss' : 'ws'
 
-export const init = () => {
-    console.log("Connecting to server")
-    socket = io(`${ protocol }://${ SERVER_ADDRESS }`, {
-        query: 'token=' + localStorage.getItem('token'),
-        reconnection: true
-    })
+export const socket = io(`${protocol}://${SERVER_ADDRESS}`, {
+  extraHeaders: {
+    authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+})
 
-    socket.on("connect", () => {
-        console.log("connected")
-    })
+socket.on('connect', () => {
+  console.log('connected')
+})
 
-    socket.on("server_alert", (al) => {
-        alert(al.message)
-    })
+socket.on('server_alert', (al) => {
+  alert(al.message)
+})
 
-    socket.on("disconnect", () => {
-        console.log("disconnected here")
+socket.on('disconnect', () => {
+  console.log('disconnected here')
 
-        logout()
-    })
-}
-
-export const close = () => {
-    socket.close()
-}
+  logout()
+})
