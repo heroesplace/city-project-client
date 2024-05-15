@@ -1,14 +1,12 @@
 <template>
-    <!-- Fenêtre settings -->
-    <div :id="id" class="window" ref="window" @mousedown="top()" >
-        <div class="top">
-            <div class="title">{{ title }}</div>
-            <!--<div class="close" @click="closeWindow()">✕</div>-->
-        </div>
-        <div class="content">
-            <slot></slot>
-        </div>
+  <div :id="id" class="window" ref="window" @mousedown="top()">
+    <div class="top">
+      <div class="title">{{ title }}</div>
     </div>
+    <div class="content">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -75,5 +73,5 @@ export default {
 </script>
 
 <style type="sass">
-@import "../assets/components/window.sass";
+  @import "../assets/components/window.sass";
 </style>

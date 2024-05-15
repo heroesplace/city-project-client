@@ -1,9 +1,9 @@
 <template>
-    GAMEPLAY SETTINGS
+    CONTROLS SETTINGS
 </template>
 
 <script setup>
   defineOptions({
-      name: 'settings.gameplay'
+      name: 'settings.controls'
   })
 </script>

@@ -7,23 +7,25 @@
 				</svg>
 			</div>
 			<h1>City Project</h1>
-			<h2>Où chaque choix construit un monde</h2>
+			<h2>{{ $t('global.slogan') }}</h2>
 		</div>
 		<div class="form">
 			<form @submit.prevent="login">
 				<div class="input_line">
-					<input v-model="accountName" type="text" name="accountName" placeholder="IDENTIFIANT" required />
+					<input v-model="accountName" type="text" name="accountName" :placeholder="$t('account.accountName')" required />
 				</div>
 				<div class="input_line">
-					<input v-model="password" type="password" placeholder="MOT DE PASSE" required />
+					<input v-model="password" type="password" :placeholder="$t('account.password')" required />
 				</div>
 				<div class="submit">
-					<input type="submit" value="Se connecter" />
-					<a class="button" href="/register">S'inscrire ?</a>
+					<input type="submit" :value="$t('account.login.submit')" />
+					<a class="button" href="/register">{{ $t('account.login.register') }}</a>
 				</div>
 			</form>
 		</div>
-    </div>
+
+		<LocaleSwitchModule />
+	</div>
 </template>
 
 <script>
@@ -31,7 +33,12 @@ import router from '@/router'
 
 import { login } from '@/api/web/auth.js'
 
+import LocaleSwitchModule from '@/modules/LocaleSwitchModule.vue'
+
 export default {
+	components: {
+		LocaleSwitchModule
+	},
 	data() {
 		return {
 			accountName: "",

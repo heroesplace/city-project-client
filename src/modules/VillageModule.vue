@@ -6,12 +6,12 @@
     <JoinVillage @changeAction="action = $event" />
   </div>
   <div v-else-if="action == 'exists'">
-    MON SUPER VILLAGE
+    <ManageVillage />
   </div>
   <div v-else>
-    <button @click="action = 'create'">Créer un village</button>
-    <span class="or">ou</span>
-    <button @click="action = 'join'">Rejoindre un village</button>
+    <button @click="action = 'create'">{{ $t('village.create.name') }}</button>
+    <span class="or">{{ $t('global.or') }}</span>
+    <button @click="action = 'join'">{{ $t('village.join.name') }}</button>
   </div>
 </template>
 
@@ -21,13 +21,14 @@
 
   import NewVillage from './village/NewVillage.vue'
   import JoinVillage from './village/JoinVillage.vue'
+  import ManageVillage from './village/ManageVillage.vue'
 
-  const action = ref('choose')
+  const action = ref('')
 
   onMounted(() => {
     console.log('[vue] Village mounted')
 
-    socket.emit('chracter_is_villager')
+    socket.emit('character_is_villager')
 
     socket.on('character_is_villager', (res) => {
       if (res.is_villager) action.value = 'exists'

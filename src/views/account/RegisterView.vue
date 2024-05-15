@@ -7,31 +7,33 @@
 				</svg>
 			</div>
 			<h1>City Project</h1>
-			<h2>Où chaque choix construit un monde</h2>
+			<h2>{{ $t('global.slogan') }}</h2>
 		</div>
 		<div class="form">
 			<form @submit.prevent="register">
 				<div class="input_line">
-					<input v-model="accountName" type="text" name="accountName" placeholder="INDENTIFIANT" required/>
+					<input v-model="accountName" type="text" name="accountName" :placeholder="$t('account.accountName')" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="characterName" type="text" name="characterName" placeholder="PERSONNAGE" required/>
+					<input v-model="characterName" type="text" name="characterName" :placeholder="$t('account.register.characterName')" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="emailAddress" type="email" name="emailAddress" placeholder="ADRESSE E-MAIL" required/>
+					<input v-model="emailAddress" type="email" name="emailAddress" :placeholder="$t('account.register.emailAddress')" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="password" type="password" name="password" placeholder="MOT DE PASSE" required/>
+					<input v-model="password" type="password" name="password" :placeholder="$t('account.password')" required/>
 				</div>
 				<div class="input_line">
-					<input v-model="confirmPassword" type="password" name="confirmPassword" placeholder="CONFIRMATION" required/>
+					<input v-model="confirmPassword" type="password" name="confirmPassword" :placeholder="$t('account.register.confirmPassword')" required/>
 				</div>
 				<div class="submit">
-					<input type="submit" value="S'inscrire"/>
-					<a class="button" href="/login">Se connecter ?</a>
+					<input type="submit" :value="$t('account.register.submit')"/>
+					<a class="button" href="/login">{{ $t('account.register.login') }}</a>
 				</div>
 			</form>
 		</div>
+
+		<LocaleSwitchModule />
 	</div>
 </template>
 
@@ -40,16 +42,21 @@ import router from '@/router'
 import { register } from '@/api/web/auth.js'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
-const protocol = import.meta.env.MODE === "production" ? "https" : "http"
+const protocol = import.meta.env.MODE === 'production' ? 'https' : 'http'
+
+import LocaleSwitchModule from '@/modules/LocaleSwitchModule.vue'
 
 export default {
+	components: {
+		LocaleSwitchModule
+	},
 	data() {
 		return {
-			accountName: "toto",
-			characterName: "toto",
-			emailAddress: "t@t.t",
-			password: "salut",
-			confirmPassword: "salut"
+			accountName: '',
+			characterName: '',
+			emailAddress: '',
+			password: '',
+			confirmPassword: ''
 		}
 	},
 	methods: {
@@ -60,7 +67,7 @@ export default {
 				alert("Les mots de passe ne correspondent pas")
 				return
 			}
-			
+
 			await register(accountName, characterName, emailAddress, password).then(() => {
 				router.push('/login')
 			}).catch(err => {

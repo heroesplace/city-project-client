@@ -2,10 +2,10 @@
     <div class='new_village'>
         <div class='invitation_form'>
             <div>
-                <h3>Inviter un joueur</h3>
-                <input type='text' @keyup.enter='invite' v-model='memberSearch' maxlength=50 placeholder='Rechercher un personnage...' />
+                <h3>{{ $t('village.create.invite.name') }}</h3>
+                <input type='text' @keyup.enter='invite' v-model='characterSearch' maxlength=50 :placeholder="$t('village.create.invite.search')" />
 
-                <button @click='invite'>Inviter</button>
+                <button @click='invite'>{{ $t('village.create.invite.submit') }}</button>
             </div>
             <div class='invitation_list'>
                 <div class='invited_member'>
@@ -15,7 +15,7 @@
                     </span>
                 </div>
 
-                <div class='invited_member' v-for='item in membersList' :key='item'>
+                <div class='invited_member' v-for='item in invitedCharacters' :key='item'>
                     <span>{{ item.name }}</span>
                     <span v-if='item.status == 0'>
                         <img alt='Pending invitation' src='/png/hourglass.png' />
@@ -30,11 +30,11 @@
             </div>
         </div>
         <div>
-            <h3>Créer un village</h3>
-            <input type='text' @keyup.enter='createVillage' v-model='villageName' maxlength=50 placeholder='Nom du village...' />
-            <button @click='createVillage'>Créer</button>
-            <span class="or">ou</span>
-            <button @click='cancel'>Annuler</button>
+            <h3>{{ $t('village.create.name') }}</h3>
+            <input type='text' @keyup.enter='createVillage' v-model='villageName' maxlength=50 :placeholder="$t('village.create.newVillageName')" />
+            <button @click='createVillage'>{{ $t('village.create.submit') }}</button>
+            <span class="or">{{ $t('global.or') }}</span>
+            <button @click='cancel'>{{ $t('global.cancel') }}</button>
         </div>
     </div>
 </template>
@@ -45,19 +45,19 @@
 
 	import { jwt_parse } from '@/api/web/auth.js'
 
-	const memberSearch = ref('')
-	const membersList = ref([])
+	const characterSearch = ref('')
+	const invitedCharacters = ref([])
 	const characterName = jwt_parse(localStorage.getItem('token')).characterName
 	const emits = defineEmits(['changeAction'])
 
 	const villageName = ref('')
 
 	const invite = () => {
-		if (memberSearch.value == '') return
+		if (characterSearch.value == '') return
 
-		socket.emit('invite_add_character', memberSearch.value)
+		socket.emit('invite_add_character', characterSearch.value)
 
-		memberSearch.value = ''
+		characterSearch.value = ''
 	}
 
 	const cancel = () => {
@@ -79,7 +79,7 @@
 		console.log('[vue] NewVillage mounted')
 
 		socket.on('invite_pull_characters', (data) => {
-			membersList.value = data.members_list
+			invitedCharacters.value = data.characters
 		})
 	})
 

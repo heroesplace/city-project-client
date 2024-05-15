@@ -9,7 +9,7 @@
       </div>
     </div>
     <div v-else>
-      <NoMail />
+      <EmptyMailbox />
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@
   import { ref, onMounted, onUnmounted } from 'vue'
 
   import InviteMail from './mailbox/InviteMail.vue'
-  import NoMail from './mailbox/NoMail.vue'
+  import EmptyMailbox from './mailbox/EmptyMailbox.vue'
 
   const mailList = ref([])
 

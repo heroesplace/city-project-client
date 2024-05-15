@@ -14,11 +14,11 @@ export class Game extends Scene {
   }
 
   preload () {
-    this.load.image('tiles', '/game/assets/tileset.png')
+    this.load.image('tiles', '/engine/assets/tileset.png')
 
-    this.load.tilemapTiledJSON('map', '/game/data/emptytileset.json')
+    this.load.tilemapTiledJSON('map', '/engine/data/emptytileset.json')
 
-    this.load.atlas('atlas', '/game/assets/character.png', '/game/data/character.json')
+    this.load.atlas('atlas', '/engine/assets/character.png', '/engine/data/character.json')
   }
 
   create () {

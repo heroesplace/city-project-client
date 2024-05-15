@@ -1,21 +1,13 @@
 <template>
-    GENERAL SETTINGS
+    {{$t('settings.general')}}
+
+    <LocaleSwitchModule />
 </template>
 
-<script>
-import lg from '../../locales/lg.js'
+<script setup>
+    import LocaleSwitchModule from '@/modules/LocaleSwitchModule.vue'
 
-export default {
-    name: lg('general'),
-    props: {
-    },
-    setup(props) {
-    },
-    mounted() {
-       
-    },
-    methods: {
-        
-    }
-}
+    defineOptions({
+        name: 'settings.general'
+    })
 </script>

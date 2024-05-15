@@ -1,28 +1,27 @@
 <template>
-    <div class="navbar">
-        <div class="menu">
-            <div class="menu_button"
-                v-for="item in tabs"
-                :key="item"
-                @click="currentTab = item"
-            >
-                <div>{{ item.name }}</div>
-            </div>
-        </div>
-        <div class="content">
-            <component :is="currentTab"></component>
-        </div>
+  <div class="navbar">
+    <div class="menu">
+      <div class="menu_button"
+        v-for="item in tabs"
+        :key="item"
+        @click="currentTab = item">
+        <div>{{ $t(item.name) }}</div>
+      </div>
     </div>
+    <div class="content">
+      <component :is="currentTab"></component>
+    </div>
+  </div>
 </template>
 
 <script setup>
-    import { shallowRef } from 'vue'
+  import { shallowRef } from 'vue'
 
-    const props = defineProps(['tabs'])
+  const props = defineProps(['tabs'])
 
-    const currentTab = shallowRef(props.tabs[0])
+  const currentTab = shallowRef(props.tabs[0])
 </script>
 
 <style type="sass">
-@import "../assets/components/navbar.sass";
+  @import "../assets/components/navbar.sass";
 </style>

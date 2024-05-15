@@ -5,7 +5,7 @@
 <script setup>
   import GeneralSettings from './settings/GeneralSettings.vue'
   import AudioSettings from './settings/AudioSettings.vue'
-  import ControlSettings from './settings/ControlSettings.vue'
+  import ControlsSettings from './settings/ControlsSettings.vue'
   import GameplaySettings from './settings/GameplaySettings.vue'
   import InterfaceSettings from './settings/InterfaceSettings.vue'
   import SocialSettings from './settings/SocialSettings.vue'
@@ -16,7 +16,7 @@
   const settingsList = [
     GeneralSettings,
     AudioSettings,
-    ControlSettings,
+    ControlsSettings,
     GameplaySettings,
     InterfaceSettings,
     SocialSettings,

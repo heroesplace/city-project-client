@@ -2,6 +2,6 @@ FROM nginx:alpine-slim
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /usr/src/app
+WORKDIR /usr/share/nginx/html
 
 COPY ./dist /usr/share/nginx/html

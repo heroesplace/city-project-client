@@ -14,8 +14,6 @@
       emit('current-active-scene', currentScene)
 
       scene.value = currentScene
-
-      console.log("Current scene ready", scene.value)
     })
   })
 

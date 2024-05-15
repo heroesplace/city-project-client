@@ -1,4 +1,4 @@
-div.mail-empty
+div.mailbox-empty
   cursor: pointer
   transition: 0.1s
   border: 2px solid transparent
@@ -8,13 +8,11 @@ div.mail-empty
   box-sizing: border-box
   text-align: center
 
+  .message
+    width: 100%
+    display: flex
+    align-self: center
 
-div.mail-empty .message
-  width: 100%
-  display: flex
-  align-self: center
-
-
-div.mail-empty .message span
-  height : 100%
-  width: 100%
+    span
+      height : 100%
+      width: 100%
