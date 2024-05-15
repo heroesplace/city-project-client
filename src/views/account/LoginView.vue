@@ -19,7 +19,7 @@
 				</div>
 				<div class="submit">
 					<input type="submit" value="Se connecter" />
-					<router-link to="/register">S'inscrire ?</router-link>
+					<a class="button" href="/register">S'inscrire ?</a>
 				</div>
 			</form>
 		</div>
@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import router from '../router'
+import router from '@/router'
 
-import { login } from '../api/web/auth.js'
+import { login } from '@/api/web/auth.js'
 
 export default {
 	data() {
@@ -52,6 +52,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "../assets/form.sass";
+<style lang="sass">
+@import "../../assets/views/account.sass"
 </style>

@@ -28,7 +28,7 @@
 				</div>
 				<div class="submit">
 					<input type="submit" value="S'inscrire"/>
-					<router-link to="/login">Se connecter ?</router-link>
+					<a class="button" href="/login">Se connecter ?</a>
 				</div>
 			</form>
 		</div>
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import router from '../router'
-import { register } from '../api/web/auth.js'
+import router from '@/router'
+import { register } from '@/api/web/auth.js'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 const protocol = import.meta.env.MODE === "production" ? "https" : "http"
@@ -71,6 +71,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "../assets/form.sass";
+<style lang="sass">
+@import "../../assets/views/account.sass"
 </style>

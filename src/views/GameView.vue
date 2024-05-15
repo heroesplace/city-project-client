@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+	<div class="container">
 		<div class="user-interface">
 			<GameModule />
 
@@ -9,12 +9,12 @@
 				</template>
 			</Window>
 
-			<Window v-if="isMailboxWindow" :title="lg('mailbox')" id="test_window" width="25vw" height="50vh" draggable>
+			<Window v-if="isMailboxWindow" :title="lg('mailbox')" id="mailbox_window" width="25vw" height="50vh" draggable>
 				<template v-slot:>
-					<MailModule />
+					<MailboxModule />
 				</template>
 			</Window>
-			
+
 			<Window v-if="isVillageWindow" :title="lg('create_village')" id="village_window" width="27vw" height="50vh" draggable>
 				<template v-slot:>
 					<VillageModule />
@@ -26,7 +26,6 @@
 			<ChatModule />
 		</div>
 	</div>
-    
 </template>
 
 <script setup>
@@ -39,21 +38,17 @@ import ToolbarModule from '@/modules/ToolbarModule.vue'
 
 import ChatModule from '@/modules/ChatModule.vue'
 import VillageModule from '@/modules/VillageModule.vue'
-import MailModule from '@/modules/MailModule.vue'
+import MailboxModule from '@/modules/MailboxModule.vue'
 
 import GameModule from '@/modules/GameModule.vue'
 
 import lg from '@/locales/lg.js'
 
-import { socket } from "@/api/socket/socket.js";
-import { jwt_parse } from '@/api/web/auth.js'
+import { socket } from '@/api/socket/socket.js';
 
 const isVillageWindow = ref(false)
 const isSettingsWindow = ref(false)
 const isMailboxWindow = ref(false)
-
-const debug_name = ref('')
-const godot_url = ref(window.location.origin + "/godot/index.html")
 
 function toggleWindow(window) {
 	switch (window) {
@@ -70,16 +65,16 @@ function toggleWindow(window) {
 }
 
 onMounted(() => {
-	document.title = "CityProject"
-	debug_name.value = jwt_parse(localStorage.getItem('token')).characterName
+	console.log('Mounting GameView')
+	document.title = 'CityProject'
 })
 
 onUnmounted(() => {
-	console.log("Unmounting GameView")
+	console.log('[vue] Unmounting GameView')
 	socket.close()
 })
 </script>
 
 <style type="sass">
-@import "../assets/gui.sass";
+  @import "@/assets/views/game.sass";
 </style>

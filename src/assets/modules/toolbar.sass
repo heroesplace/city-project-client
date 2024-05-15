@@ -1,4 +1,4 @@
-@import "../variables.sass"
+@import "../base/variables.sass"
 
 div.user-interface div.toolbar
     position: absolute
@@ -10,7 +10,7 @@ div.user-interface div.toolbar
     padding: $window_padding
 
     div.inner
-        border: $border
+        border: $border-width solid #373539
         height: 100%
         box-sizing: border-box
         display: flex
@@ -28,7 +28,7 @@ div.user-interface div.toolbar
 
     div.tool_button:hover
         background-color: rgba(255, 255, 255, 0.1)
-    
+
     div.tool_button.icon-1 img
         position: absolute
         top: 50%

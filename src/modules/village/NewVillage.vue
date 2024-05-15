@@ -1,11 +1,11 @@
 <template>
-    <div class='create_village'>
+    <div class='new_village'>
         <div class='invitation_form'>
             <div>
                 <h3>Inviter un joueur</h3>
-                <input type='text' v-model='member_search' maxlength=50 placeholder='Rechercher un personnage...' />
+                <input type='text' @keyup.enter='invite' v-model='memberSearch' maxlength=50 placeholder='Rechercher un personnage...' />
 
-                <button @click='invite(member_search)'>Inviter</button>
+                <button @click='invite'>Inviter</button>
             </div>
             <div class='invitation_list'>
                 <div class='invited_member'>
@@ -15,7 +15,7 @@
                     </span>
                 </div>
 
-                <div class='invited_member' v-for='item in members_list' :key='item'>
+                <div class='invited_member' v-for='item in membersList' :key='item'>
                     <span>{{ item.name }}</span>
                     <span v-if='item.status == 0'>
                         <img alt='Pending invitation' src='/png/hourglass.png' />
@@ -31,103 +31,61 @@
         </div>
         <div>
             <h3>Créer un village</h3>
-            <input type='text' v-model='village_name' maxlength=50 placeholder='Nom du village... (20 caractères max.)' />
-            <button @click='create_village'>Créer</button>
-            ou
+            <input type='text' @keyup.enter='createVillage' v-model='villageName' maxlength=50 placeholder='Nom du village...' />
+            <button @click='createVillage'>Créer</button>
+            <span class="or">ou</span>
             <button @click='cancel'>Annuler</button>
         </div>
     </div>
 </template>
 
-<style>
-    div.create_village {
-        padding: 1rem;
-        height: calc(100% - 2rem);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    div.create_village h3 {
-        padding: 0;
-        margin: 0;
-    }
-
-    div.create_village div.invitation_form {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 1rem 0;
-    }
-
-    div.create_village div.invitation_form div.invitation_list {
-        overflow: auto;
-        border: 1px solid #37373a;
-        height: 100%;
-    }
-
-    div.create_village div.invitation_form div.invitation_list div.invited_member img {
-        width: 1.5vw;
-    }
-
-    div.create_village div.invitation_form div.invitation_list div.invited_member {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 1rem;
-        margin: 0.5vw;
-        cursor: pointer;
-    }
-
-    div.create_village div.invitation_form div.invitation_list div.invited_member:first-child {
-        border-bottom: 1px solid #37373a;
-    }
-</style>
-
 <script setup>
-    import { ref, defineEmits, onMounted, onUnmounted } from 'vue'
-    import { socket } from '@/api/socket/socket.js'
+	import { ref, onMounted, onUnmounted } from 'vue'
+	import { socket } from '@/api/socket/socket.js'
 
-    import { jwt_parse } from '@/api/web/auth.js'
+	import { jwt_parse } from '@/api/web/auth.js'
 
-    const member_search = ref('')
-    const members_list = ref([])
-    const characterName = jwt_parse(localStorage.getItem('token')).characterName
-    const emits = defineEmits(['changeAction'])
+	const memberSearch = ref('')
+	const membersList = ref([])
+	const characterName = jwt_parse(localStorage.getItem('token')).characterName
+	const emits = defineEmits(['changeAction'])
 
-    const village_name = ref('')
+	const villageName = ref('')
 
-    const invite = (character) => {
-        if (character == '') return
+	const invite = () => {
+		if (memberSearch.value == '') return
 
-        socket.emit('invite_add_character', character)
-    }
+		socket.emit('invite_add_character', memberSearch.value)
 
-    const cancel = () => {
-        if (!confirm('Voulez-vous vraiment annuler la création du village ?')) return
+		memberSearch.value = ''
+	}
 
-        socket.emit('invite_cancel')
-        
-        emits('changeAction', 'choose')
-    }
+	const cancel = () => {
+		if (!confirm('Voulez-vous vraiment annuler la création du village ?')) return
 
-    const create_village = () => {
-        socket.emit('village_create', { name: village_name.value })
-    }
+		socket.emit('invite_cancel')
 
-    onMounted(() => {
-        socket.emit('invite_pull_characters')
-        console.log('New village mounted')
+		emits('changeAction', 'choose')
+	}
 
-        socket.on('invite_pull_characters', (data) => {
-            members_list.value = data.members_list
-        })
-    })
+	const createVillage = () => {
+		socket.emit('village_create', { name: villageName.value })
 
-    onUnmounted(() => {
-        console.log('New village unmounted')
+		villageName.value = ''
+	}
 
-        socket.off('invite_pull_characters')
-    })
+	onMounted(() => {
+		socket.emit('invite_pull_characters')
+		console.log('[vue] NewVillage mounted')
+
+		socket.on('invite_pull_characters', (data) => {
+			membersList.value = data.members_list
+		})
+	})
+
+	onUnmounted(() => {
+		console.log('[vue] NewVillage unmounted')
+
+		socket.off('invite_pull_characters')
+	})
 </script>

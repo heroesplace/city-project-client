@@ -1,7 +1,7 @@
 <template>
     INTERFACE SETTINGS
 
-    <button @click="setFullscreen()">Fullscreen</button>
+    <input type="checkbox" id="fullscreen-button" @click="toggleFullscreen()" />
 </template>
 
 <script>
@@ -17,9 +17,19 @@ export default {
        
     },
     methods: {
-        setFullscreen() {
-            document.documentElement.requestFullscreen()
+        toggleFullscreen() {
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            document.documentElement.requestFullscreen();
+          }
         }
     }
 }
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.querySelector('input[type=checkbox]#fullscreen-button').checked = false;
+  }
+})
 </script>

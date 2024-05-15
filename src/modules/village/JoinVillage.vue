@@ -5,11 +5,9 @@
 </template>
 
 <script setup>
-    import { defineEmits } from "vue"
+  const emits = defineEmits(['changeAction'])
 
-    const emits = defineEmits(['changeAction'])
-
-    const backToDefault = () => {
-        emits('changeAction', 'choose')
-    }
+  const backToDefault = () => {
+    emits('changeAction', 'choose')
+  }
 </script>

@@ -1,5 +1,5 @@
 import { EventBus } from '../index'
-import { Scene, Tilemaps } from 'phaser'
+import { Scene } from 'phaser'
 
 import { socket } from '@/api/socket/socket.js'
 
@@ -16,8 +16,7 @@ export class Game extends Scene {
   preload () {
     this.load.image('tiles', '/game/assets/tileset.png')
 
-    // Remove when server will be ready
-    this.load.tilemapTiledJSON('map', '/game/data/emptymap.json')
+    this.load.tilemapTiledJSON('map', '/game/data/emptytileset.json')
 
     this.load.atlas('atlas', '/game/assets/character.png', '/game/data/character.json')
   }
@@ -25,37 +24,15 @@ export class Game extends Scene {
   create () {
     const map = this.make.tilemap({ key: 'map' })
 
-    // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-    // Phaser's cache (i.e. the name you used in preload)
-    const tileset = map.addTilesetImage('tuxmon-sample-32px-extruded', 'tiles')
+    const tileset = map.addTilesetImage('custom-texture', 'tiles')
+    const belowLayer = map.createBlankLayer("Below Player", tileset, 0, 0)
 
-    // Parameters: layer name (or index) from Tiled, tileset, x, y
-    const belowLayer = map.createLayer('Below Player', tileset, 0, 0)
-    const worldLayer = map.createLayer('World', tileset, 0, 0)
-    const aboveLayer = map.createLayer('Above Player', tileset, 0, 0)
-
-    worldLayer.setCollisionByProperty({ collides: true })
-
-    // By default, everything gets depth sorted on the screen in the order we created things. Here, we
-    // want the "Above Player" layer to sit on top of the player, so we explicitly give it a depth.
-    // Higher depths will sit on top of lower depth objects.
-    aboveLayer.setDepth(10)
-
-    // Object layers in Tiled let you embed extra info into a map - like a spawn point or custom
-    // collision shapes. In the tmx file, there's an object layer with a point named "Spawn Point"
     const spawnPoint = map.findObject('Objects', obj => obj.name === 'Spawn Point')
 
-    // Create a sprite with physics enabled via the physics system. The image used for the sprite has
-    // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
     this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'atlas', 'misa-front')
       .setSize(30, 40)
       .setOffset(0, 24)
 
-    // Watch the player and worldLayer for collisions, for the duration of the scene:
-    this.physics.add.collider(this.player, worldLayer)
-
-    // Create the player's walking animations from the texture atlas. These are stored in the global
-    // animation manager so any sprite can access them.
     const anims = this.anims
     anims.create({
       key: 'misa-left-walk',
@@ -84,23 +61,6 @@ export class Game extends Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys()
 
-    // Debug graphics
-    this.input.keyboard.once('keydown-D', event => {
-      // Turn on physics debugging to show player's hitbox
-      this.physics.world.createDebugGraphic()
-
-      // Create worldLayer collision graphic above the player, but below the help text
-      const graphics = this.add
-        .graphics()
-        .setAlpha(0.75)
-        .setDepth(20)
-      worldLayer.renderDebug(graphics, {
-        tileColor: null, // Color of non-colliding tiles
-        collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-      })
-    })
-
     this.cursors.right.on('down', () => socket.emit('character_move', { direction: 'right' }))
     this.cursors.left.on('down', () => socket.emit('character_move', { direction: 'left' }))
     this.cursors.up.on('down', () => socket.emit('character_move', { direction: 'up' }))
@@ -110,10 +70,16 @@ export class Game extends Scene {
 
     socket.emit('character_spawn')
 
+    const chunk = (arr, size) =>
+      Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+        arr.slice(i * size, i * size + size)
+    )
+
     socket.on('character_spawn', ({ map_frame }) => {
+      map_frame = chunk(map_frame, 32)
       this.mapFrame = map_frame
 
-      belowLayer.putTilesAt(this.mapFrame, 0, 0)
+      belowLayer.putTilesAt(map_frame, 0, 0)
     })
 
     socket.on('character_move', (data) => {
@@ -145,7 +111,7 @@ export class Game extends Scene {
 
       if (direction === 'up') {
         // ADD ROW TO THE TOP
-        this.mapFrame.unshift(map_part[0])
+        this.mapFrame.unshift(map_part)
 
         // REMOVE LAST ROW
         this.mapFrame.pop()
@@ -153,7 +119,7 @@ export class Game extends Scene {
 
       if (direction === 'down') {
         // ADD ROW TO THE BOTTOM
-        this.mapFrame.push(map_part[0])
+        this.mapFrame.push(map_part)
 
         // REMOVE FIRST ROW
         this.mapFrame.shift()

@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
+import LoginView from '../views/account/LoginView.vue'
+import RegisterView from '../views/account/RegisterView.vue'
 import GameView from '../views/GameView.vue'
-import NewCharacterView from '../views/NewCharacterView.vue'
 
 import { checkToken } from '../api/web/auth.js'
 
@@ -25,11 +24,6 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
-    },
-    {
-      path: '/new-character',
-      name: 'new-character',
-      component: NewCharacterView
     },
     {
       path: '/game',

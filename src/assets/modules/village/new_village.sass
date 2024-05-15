@@ -1,0 +1,37 @@
+@import "../../base/variables.sass"
+
+div.new_village 
+  height: calc(100% - 2rem)
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+  h3 
+    padding: 0
+    margin: 0 0 1em 0
+
+  div.invitation_form 
+    height: 100%
+    display: flex
+    flex-direction: column
+
+    div.invitation_list 
+      overflow: auto
+      border: $border-width solid #37373a
+      height: 15em
+      margin: 0 0 1em 0
+
+      div.invited_member 
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        font-size: 1rem
+        margin: 0.5vw
+        cursor: pointer
+
+        img
+          width: 1.5vw
+
+      div.invited_member:first-child
+        border-bottom: $border-width solid #37373a
