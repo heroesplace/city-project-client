@@ -6,6 +6,7 @@
 [![Socket.io-client](https://img.shields.io/badge/Socket.io_client-010101?style=for-the-badge&logo=socket.io&logoColor=white)](https://github.com/socketio/socket.io-client)
 [![SASS](https://img.shields.io/badge/SASS-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://github.com/sass/sass)
 [![JavaScript Standard Style](https://img.shields.io/badge/JavaScript_Standard_Style-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/standard/standard)
+[![i18n](https://img.shields.io/badge/i18n-3178C6?style=for-the-badge&logo=internationalization&logoColor=white)](https://github.com/intlify/vue-i18n-next)
 
 [![Discord](https://img.shields.io/discord/1070782232219877477?color=7289da&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/VSdXn4Jqws)
 

@@ -4,6 +4,9 @@ const en = {
     or: 'or',
     cancel: 'Cancel',
   },
+  error: {
+    WRONG_CREDENTIALS: 'Wrong credentials',
+  },
   account: {
     accountName: 'Username',
     password: 'PASSWORD',
@@ -56,6 +59,9 @@ const fr = {
     slogan: 'Où chaque choix construit un monde',
     or: 'ou',
     cancel: 'Annuler',
+  },
+  error: {
+    WRONG_CREDENTIALS: 'Identifiants incorrects',
   },
   account: {
     accountName: 'Identifiant',

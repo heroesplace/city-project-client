@@ -2,6 +2,8 @@ import { EventBus } from '../index'
 import { Scene } from 'phaser'
 
 import { socket } from '@/api/socket/socket.js'
+import { onCharacterMove } from '@/engine/objects/Character.js'
+import { onCharacterSpawn } from '../objects/Character'
 
 export class Game extends Scene {
   constructor () {
@@ -11,6 +13,7 @@ export class Game extends Scene {
     this.cursors = undefined
 
     this.mapFrame = []
+
   }
 
   preload () {
@@ -22,6 +25,21 @@ export class Game extends Scene {
   }
 
   create () {
+    this.cursors = this.input.keyboard.createCursorKeys()
+
+    // Gestion du focus
+    this.input.on('pointerdownoutside', () => {
+      this.input.keyboard.enabled = false
+      this.input.keyboard.disableGlobalCapture()
+    })
+
+    this.input.on('pointerdown', () => {
+      document.activeElement.blur()
+
+      this.input.keyboard.enabled = true
+      this.input.keyboard.enableGlobalCapture()
+    })
+
     const map = this.make.tilemap({ key: 'map' })
 
     const tileset = map.addTilesetImage('custom-texture', 'tiles')
@@ -59,8 +77,6 @@ export class Game extends Scene {
       repeat: -1
     })
 
-    this.cursors = this.input.keyboard.createCursorKeys()
-
     this.cursors.right.on('down', () => socket.emit('character_move', { direction: 'right' }))
     this.cursors.left.on('down', () => socket.emit('character_move', { direction: 'left' }))
     this.cursors.up.on('down', () => socket.emit('character_move', { direction: 'up' }))
@@ -70,63 +86,8 @@ export class Game extends Scene {
 
     socket.emit('character_spawn')
 
-    const chunk = (arr, size) =>
-      Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
-        arr.slice(i * size, i * size + size)
-    )
-
-    socket.on('character_spawn', ({ map_frame }) => {
-      map_frame = chunk(map_frame, 32)
-      this.mapFrame = map_frame
-
-      belowLayer.putTilesAt(map_frame, 0, 0)
-    })
-
-    socket.on('character_move', (data) => {
-      const { direction, map_part } = data
-
-      if (direction === 'right') {
-        // ADD ROW TO THE RIGHT
-        this.mapFrame.forEach((row, index) => {
-          this.mapFrame[index].push(map_part[index])
-        })
-
-        // REMOVE FIRST ROW
-        this.mapFrame.forEach((row, index) => {
-          this.mapFrame[index].shift()
-        })
-      }
-
-      if (direction === 'left') {
-        // ADD ROW TO THE LEFT
-        this.mapFrame.forEach((row, index) => {
-          this.mapFrame[index].unshift(map_part[index])
-        })
-
-        // REMOVE LAST ROW
-        this.mapFrame.forEach((row, index) => {
-          this.mapFrame[index].pop()
-        })
-      }
-
-      if (direction === 'up') {
-        // ADD ROW TO THE TOP
-        this.mapFrame.unshift(map_part)
-
-        // REMOVE LAST ROW
-        this.mapFrame.pop()
-      }
-
-      if (direction === 'down') {
-        // ADD ROW TO THE BOTTOM
-        this.mapFrame.push(map_part)
-
-        // REMOVE FIRST ROW
-        this.mapFrame.shift()
-      }
-
-      belowLayer.putTilesAt(this.mapFrame, 0, 0)
-    })
+    socket.on('character_spawn', (content) => onCharacterSpawn({ content, layer: belowLayer, mapFrame: this.mapFrame }))
+    socket.on('character_move', (content) => onCharacterMove({ content, layer: belowLayer, mapFrame: this.mapFrame }))
   }
 
   update (time, delta) {

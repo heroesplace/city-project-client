@@ -10,7 +10,7 @@
 			<h2>{{ $t('global.slogan') }}</h2>
 		</div>
 		<div class="form">
-			<form @submit.prevent="login">
+			<form @submit.prevent="submit">
 				<div class="input_line">
 					<input v-model="accountName" type="text" name="accountName" :placeholder="$t('account.accountName')" required />
 				</div>
@@ -23,39 +23,27 @@
 				</div>
 			</form>
 		</div>
-
-		<LocaleSwitchModule />
 	</div>
 </template>
 
-<script>
+<script setup>
 import router from '@/router'
+import { ref } from 'vue'
 
 import { login } from '@/api/web/auth.js'
 
-import LocaleSwitchModule from '@/modules/LocaleSwitchModule.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
-export default {
-	components: {
-		LocaleSwitchModule
-	},
-	data() {
-		return {
-			accountName: "",
-			password: ""
-		}
-	},
-	methods: {
-		async login() {
-			const { accountName, password } = this
+const accountName = ref('')
+const password = ref('')
 
-			await login(accountName, password).then((token) => {
-				router.go('/game')
-			}).catch(err => {
-				alert(err.message)
-			})
-		}
-	}
+const submit = () => {
+	login(accountName.value, password.value).then((token) => {
+		router.go('/game')
+	}).catch(err => {
+		console.log(err.message)
+	})
 }
 </script>
 

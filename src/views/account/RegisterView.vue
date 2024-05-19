@@ -10,7 +10,7 @@
 			<h2>{{ $t('global.slogan') }}</h2>
 		</div>
 		<div class="form">
-			<form @submit.prevent="register">
+			<form @submit.prevent="submit">
 				<div class="input_line">
 					<input v-model="accountName" type="text" name="accountName" :placeholder="$t('account.accountName')" required/>
 				</div>
@@ -32,49 +32,36 @@
 				</div>
 			</form>
 		</div>
-
-		<LocaleSwitchModule />
 	</div>
 </template>
 
-<script>
+<script setup>
+
+import { ref } from 'vue'
+
 import router from '@/router'
 import { register } from '@/api/web/auth.js'
 
 const SERVER_ADDRESS = import.meta.env.VITE_SERVER_ADDRESS
 const protocol = import.meta.env.MODE === 'production' ? 'https' : 'http'
 
-import LocaleSwitchModule from '@/modules/LocaleSwitchModule.vue'
+const accountName = ref('')
+const characterName = ref('')
+const emailAddress = ref('')
+const password = ref('')
+const confirmPassword = ref('')
 
-export default {
-	components: {
-		LocaleSwitchModule
-	},
-	data() {
-		return {
-			accountName: '',
-			characterName: '',
-			emailAddress: '',
-			password: '',
-			confirmPassword: ''
+const submit = () => {
+		if (password.value !== confirmPassword.value) {
+			alert("Les mots de passe ne correspondent pas")
+			return
 		}
-	},
-	methods: {
-		async register() {
-			const { accountName, characterName, emailAddress, password, confirmPassword } = this
 
-			if (password !== confirmPassword) {
-				alert("Les mots de passe ne correspondent pas")
-				return
-			}
-
-			await register(accountName, characterName, emailAddress, password).then(() => {
-				router.push('/login')
-			}).catch(err => {
-				console.error(err)
-			})
-		}
-	}
+		register(accountName.value, characterName.value, emailAddress.value, password.value).then(() => {
+			router.push('/login')
+		}).catch(err => {
+			console.error(err)
+		})
 }
 </script>
 

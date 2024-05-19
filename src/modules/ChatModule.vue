@@ -26,7 +26,7 @@
   import { socket } from '@/api/socket/socket.js'
 
   const messageHistory = ref([])
-  const newMessage = ref('')
+  const newMessage = ref("")
 
   function sendMessage() {
     socket.emit('push_chat_message', newMessage.value)
