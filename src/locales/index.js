@@ -4,8 +4,11 @@ const en = {
     or: 'or',
     cancel: 'Cancel',
   },
-  error: {
-    WRONG_CREDENTIALS: 'Wrong credentials',
+  chat: {
+    systemName: 'System',
+    gm: 'GM',
+    HELP_COMMAND: 'Available commands: /help, /clear',
+    UNKNOWN_COMMAND: 'Unknown command. Type /help to see available commands.',
   },
   account: {
     accountName: 'Username',
@@ -20,6 +23,9 @@ const en = {
       characterName: 'Character name',
       submit: 'Register',
       login: 'Login ?',
+    },
+    error: {
+      WRONG_CREDENTIALS: 'Wrong credentials',
     }
   },
   settings: {
@@ -60,8 +66,11 @@ const fr = {
     or: 'ou',
     cancel: 'Annuler',
   },
-  error: {
-    WRONG_CREDENTIALS: 'Identifiants incorrects',
+  chat: {
+    systemName: 'Système',
+    gm: 'MJ',
+    HELP_COMMAND: 'Commandes disponibles : /help, /clear',
+    UNKNOWN_COMMAND: 'Commande inconnue. Tapez /help pour voir les commandes disponibles',
   },
   account: {
     accountName: 'Identifiant',
@@ -76,6 +85,9 @@ const fr = {
       characterName: 'Personnage',
       submit: 'S\'inscrire',
       login: 'Connexion ?',
+    },
+    error: {
+      WRONG_CREDENTIALS: 'Identifiants incorrects',
     }
   },
   settings: {
