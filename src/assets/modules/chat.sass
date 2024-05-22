@@ -9,7 +9,13 @@ div.user-interface div.chat
   width: 45vh
   overflow-wrap: break-word
   border: $border-width solid #373539
-  
+
+  .world
+    color: white
+
+  .whisper
+    color: lightpink
+
   div.inner
     height: 100%
     box-sizing: border-box
@@ -20,11 +26,14 @@ div.user-interface div.chat
     div.top
       display: flex
       flex-direction: row
-      color: white
       justify-content: space-between
       width: calc(100% + 0.5vh)
       border-bottom: $border
       margin-bottom: 0.5vh
+
+      .selected
+        background-color: rgba(255, 255, 255, 0.2)
+        cursor: pointer
 
       div:hover
         background-color: rgba(255, 255, 255, 0.2)
@@ -35,25 +44,7 @@ div.user-interface div.chat
         height: 100%
         width: 100%
         text-align: center
-      
-      div.village
-        color: orange
-      
-      div.duchy
-        color: lightblue
-      
-      div.kingdom
-        color: yellow
-      
-      div.empire
-        color: red
-      
-      div.world
-        color: lime
 
-      div.dm
-        color: lightpink
-      
       div:first-child
         border-left: none
 
@@ -72,12 +63,11 @@ div.user-interface div.chat
         background-color: #ffffff30
         border: $border
         border-radius: 0
-      
+
       scrollbar-width: thin
       scrollbar-color: #000000
-      
+
       div.message
-        color: white
         user-select: text
 
         span.user
@@ -102,4 +92,3 @@ div.user-interface div.chat
         outline: none
         border: none
         background-color: rgba(0, 0, 0, 0)
-        

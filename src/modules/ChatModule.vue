@@ -2,14 +2,19 @@
   <div class="chat">
     <div class="inner">
       <div class="top">
-        <div class="world">Monde</div>
+        <div
+          v-for="tab in tabs"
+          :key="tab"
+          @click="selectTab(tab)">
+          <div :class="tab + ' ' + (currentTab == tab ? 'selected' : '')">{{ tab }}</div>
+        </div>
       </div>
       <div class="messages">
-        <div class="message" 
-          v-for="message in messageHistory"
+        <div :class="'message ' + message.channel"
+          v-for="message in messageHistory.filter(m => m.channel === currentTab)"
           :key="message">
-          <span class="channel"></span>
-          <span class="user admin">{{ message.author }}</span>
+          <span class="channel">{{ message.gm ? "[GM] " : "" }}</span>
+          <span class="user">{{ message.author }}</span>
           <span class="colon"> : </span>
           <span class="content">{{ message.content }}</span>
         </div>
@@ -27,13 +32,25 @@
   import { useI18n } from 'vue-i18n'
   const { t } = useI18n()
 
-  const messageHistory = ref([])
-  const newMessage = ref("")
+  const newMessage = ref('')
+  const tabs = ['world', 'whisper']
+  const currentTab = ref('')
 
-  function sendMessage() {
-    socket.emit('push_chat_message', { message: newMessage.value, channel: 1 })
+  const messageHistory = ref([])
+
+  const sendMessage = () => {
+    socket.emit('push_chat_message', { message: newMessage.value, channel: currentTab.value })
     newMessage.value = ''
   }
+
+  const selectTab = (tab) => {
+    currentTab.value = tab
+
+    socket.emit('join_chat_channel', { channel: currentTab.value })
+  }
+
+  // Select default channel
+  selectTab(tabs[0])
 
   socket.on('update_chat_message', (message) => {
     messageHistory.value.push(message)
