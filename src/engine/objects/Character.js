@@ -2,60 +2,69 @@ const chunk = (arr, size) => Array.from({ length: Math.ceil(arr.length / size) }
   arr.slice(i * size, i * size + size)
 )
 
-export const onCharacterSpawn = ({ content, layer, mapFrame }) => {
-  const { map_frame } = content
+export const onCharacterSpawn = ({ content, layers, mapFrame }) => {
+  for (let i = 0; i < content.layers.length; i++) {
+    mapFrame[i].push(...chunk(content.layers[i], 32))
 
-  mapFrame.push(...chunk(map_frame, 32))
+    // Server side
+    mapFrame[i].forEach((row, rowIndex) => {
+      row.forEach((tile, tileIndex) => {
+        if (tile == 0) mapFrame[i][rowIndex][tileIndex] = -1
+      })
+    })
 
-  layer.putTilesAt(mapFrame, 0, 0)
+    layers[i].putTilesAt(mapFrame[i], 0, 0)
+  }
 }
 
-export const onCharacterMove = ({ content, layer, mapFrame }) => {
-  const { direction, map_part } = content
+export const onCharacterMove = ({ content, layers, mapFrame }) => {
+  for (let i = 0; i < content.layers.length; i++) {
+    if (content.direction === 'right') {
+      // ADD ROW TO THE RIGHT
+      mapFrame[i].forEach((row, index) => {
+        mapFrame[i][index].push(content.layers[i][index])
+      })
 
-  console.log(map_part)
+      // REMOVE FIRST ROW
+      mapFrame[i].forEach((row, index) => {
+        mapFrame[i][index].shift()
+      })
+    }
 
-  if (direction === 'right') {
-    // ADD ROW TO THE RIGHT
-    mapFrame.forEach((row, index) => {
-      mapFrame[index].push(map_part[index])
+    if (content.direction === 'left') {
+      // ADD ROW TO THE LEFT
+      mapFrame[i].forEach((row, index) => {
+        mapFrame[i][index].unshift(content.layers[i][index])
+      })
+
+      // REMOVE LAST ROW
+      mapFrame[i].forEach((row, index) => {
+        mapFrame[i][index].pop()
+      })
+    }
+
+    if (content.direction === 'up') {
+      // ADD ROW TO THE TOP
+      mapFrame[i].unshift(content.layers[i])
+
+      // REMOVE LAST ROW
+      mapFrame[i].pop()
+    }
+
+    if (content.direction === 'down') {
+      // ADD ROW TO THE BOTTOM
+      mapFrame[i].push(content.layers[i])
+
+      // REMOVE FIRST ROW
+      mapFrame[i].shift()
+    }
+
+    mapFrame[i].forEach((row, rowIndex) => {
+      row.forEach((tile, tileIndex) => {
+        if (tile == 0) mapFrame[i][rowIndex][tileIndex] = -1
+      })
     })
 
-    // REMOVE FIRST ROW
-    mapFrame.forEach((row, index) => {
-      mapFrame[index].shift()
-    })
+    layers[i].putTilesAt(mapFrame[i], 0, 0)
   }
-
-  if (direction === 'left') {
-    // ADD ROW TO THE LEFT
-    mapFrame.forEach((row, index) => {
-      mapFrame[index].unshift(map_part[index])
-    })
-
-    // REMOVE LAST ROW
-    mapFrame.forEach((row, index) => {
-      mapFrame[index].pop()
-    })
-  }
-
-  if (direction === 'up') {
-    // ADD ROW TO THE TOP
-    mapFrame.unshift(map_part)
-
-    // REMOVE LAST ROW
-    mapFrame.pop()
-  }
-
-  if (direction === 'down') {
-    // ADD ROW TO THE BOTTOM
-    mapFrame.push(map_part)
-
-    // REMOVE FIRST ROW
-    mapFrame.shift()
-  }
-
-  console.log(mapFrame)
-
-  layer.putTilesAt(mapFrame, 0, 0)
 }
