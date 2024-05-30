@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  city-project-client:
-    image: ghcr.io/devsoleo/city-project-client:main
-    container_name: city-project-client
-    ports:
-      - "3000:80"

@@ -1,7 +1,13 @@
-FROM nginx:alpine-slim
+FROM node:20-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/src/app
 
-WORKDIR /usr/share/nginx/html
+COPY . .
 
-COPY ./dist /usr/share/nginx/html
+RUN npm install
+RUN npm run build
+RUN npm install --quiet --omit=dev
+
+EXPOSE 3002
+
+ENTRYPOINT ["npm", "start"]
