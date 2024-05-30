@@ -1,13 +1,22 @@
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
-RUN npm run build
 RUN npm install --quiet --omit=dev
+RUN npm run build
 
-EXPOSE 3002
+FROM nginx:alpine-slim
 
-ENTRYPOINT ["npm", "start"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+
+COPY --from=builder /usr/src/app/dist .
+
+COPY ./entrypoint.sh /entrypoint.sh
+
+EXPOSE 80
+
+ENTRYPOINT ["/entrypoint.sh"]
