@@ -2,23 +2,24 @@ import { EventBus } from '../index'
 import { Scene } from 'phaser'
 
 import { socket } from '@/api/socket/socket.js'
-import { onCharacterMove } from '@/engine/objects/Character.js'
-import { onCharacterSpawn } from '../objects/Character'
+import { onCharacterSpawn, onCharacterMove } from '@/engine/objects/Character.js'
+// import { onCharacterMove } from '@/engine/objects/Character.js'
+
+import MapCache from '@/engine/objects/MapCache.js'
+import Player from '@/engine/objects/Player.js'
 
 export class Game extends Scene {
   constructor () {
     super('Game')
 
-    this.player = undefined
+    this.mapCache = new MapCache()
+    this.layers = []
+    this.player = new Player()
+    this.otherPlayers = []
+
     this.cursors = undefined
 
-    this.mapFrame = [
-      [],
-      [],
-      []
-    ]
-
-    this.otherPlayers = []
+    this.lastMove = 0
   }
 
   preload () {
@@ -51,96 +52,40 @@ export class Game extends Scene {
     const map = this.make.tilemap({ key: 'map' })
 
     const tileset = map.addTilesetImage('custom-texture', 'tiles')
+    const belowLayer = map.createBlankLayer('Below', tileset, 0, 0)
+    const worldLayer = map.createBlankLayer('World', tileset, 0, 0)
+    const aboveLayer = map.createBlankLayer('Above', tileset, 0, 0)
 
-    const belowLayer = map.createBlankLayer("Below Player", tileset, 0, 0)
-    const worldLayer = map.createBlankLayer("World Layer", tileset, 0, 0)
-    const aboveLayer = map.createBlankLayer("Above Player", tileset, 0, 0)
+    this.layers = [belowLayer, worldLayer, aboveLayer]
 
     // worldLayer.setCollisionByProperty({ collides: true })
 
-    this.player = this.physics.add.sprite(464, 256, 'atlas', 'misa-front').setSize(30, 40).setOffset(0, 24)
-
-    const anims = this.anims
-
-    anims.create({
-      key: 'misa-left-walk',
-      frames: anims.generateFrameNames('atlas', { prefix: 'misa-left-walk.', start: 0, end: 3, zeroPad: 3 }),
-      frameRate: 10,
-      repeat: -1
-    })
-    anims.create({
-      key: 'misa-right-walk',
-      frames: anims.generateFrameNames('atlas', { prefix: 'misa-right-walk.', start: 0, end: 3, zeroPad: 3 }),
-      frameRate: 10,
-      repeat: -1
-    })
-    anims.create({
-      key: 'misa-front-walk',
-      frames: anims.generateFrameNames('atlas', { prefix: 'misa-front-walk.', start: 0, end: 3, zeroPad: 3 }),
-      frameRate: 10,
-      repeat: -1
-    })
-    anims.create({
-      key: 'misa-back-walk',
-      frames: anims.generateFrameNames('atlas', { prefix: 'misa-back-walk.', start: 0, end: 3, zeroPad: 3 }),
-      frameRate: 10,
-      repeat: -1
-    })
+    // 480, 256
+    this.player.setSprite(this.physics.add.sprite((15 * 32) + 16, (8 * 32) + 8, 'atlas', 'misa-front').setSize(32, 32).setOffset(0, 24))
+    this.player.initAnimations(this.anims)
 
     EventBus.emit('current-scene-ready', this)
 
     socket.emit('character_spawn')
 
-    socket.on('character_spawn', (content) => onCharacterSpawn({ content, layers: [belowLayer, worldLayer, aboveLayer], mapFrame: this.mapFrame }))
-    socket.on('character_move', (content) => onCharacterMove({ content, layers: [belowLayer, worldLayer, aboveLayer], mapFrame: this.mapFrame }))
-
-    socket.on('other_character_spawn', (content) => {
-      this.otherPlayers.push(
-        this.physics.add.sprite(604, 256, 'atlas', 'misa-front')
-          .setSize(30, 40)
-          .setOffset(0, 24)
-      )
-
-      console.log(content, "est apparu !")
-    })
-
-    socket.on('other_character_dispawn', (content) => {
-
-    })
+    socket.on('character_spawn', (content) => onCharacterSpawn({ content, game: this }))
+    socket.on('character_move', (content) => onCharacterMove({ content, game: this }))
   }
 
   update (time, delta) {
-    const prevVelocity = this.player.body.velocity.clone()
-
     if (time - this.lastMove < 130) return
 
     this.lastMove = time
 
-    // Update the animation last and give left/right animations precedence over up/down animations
-    if (this.cursors.left.isDown) {
-      socket.emit('character_move', { direction: 'left' })
+    let direction = null
 
-      this.player.anims.play('misa-left-walk', true)
-    } else if (this.cursors.right.isDown) {
-      socket.emit('character_move', { direction: 'right' })
+    if (this.cursors.left.isDown) direction = 'left'
+    if (this.cursors.right.isDown) direction = 'right'
+    if (this.cursors.up.isDown) direction = 'up'
+    if (this.cursors.down.isDown) direction = 'down'
 
-      this.player.anims.play('misa-right-walk', true)
-    } else if (this.cursors.up.isDown) {
-      socket.emit('character_move', { direction: 'up' })
+    this.player.animateMove(direction)
 
-      this.player.anims.play('misa-back-walk', true)
-    } else if (this.cursors.down.isDown) {
-      socket.emit('character_move', { direction: 'down' })
-
-      this.player.anims.play('misa-front-walk', true)
-    } else {
-      this.player.anims.stop()
-
-      // If we were moving, pick and idle frame to use
-      if (prevVelocity.x < 0) this.player.setTexture('atlas', 'misa-left')
-      else if (prevVelocity.x > 0) this.player.setTexture('atlas', 'misa-right')
-      else if (prevVelocity.y < 0) this.player.setTexture('atlas', 'misa-back')
-      else if (prevVelocity.y > 0) this.player.setTexture('atlas', 'misa-front')
-    }
+    if (direction != null) socket.emit('character_move', { direction: direction })
   }
 }
