@@ -24,10 +24,13 @@
   const mailList = ref([])
 
   onMounted(() => {
-    socket.emit('pull_character_mailbox')
+    socket.on('pull_character_mailbox', (data) => {
+      console.log('pull_character_mailbox')
+      socket.emit('pull_character_mailbox')
+    })
 
     socket.on('update_character_mailbox', (data) => {
-      console.log(data)
+      console.log('azeaz')
       mailList.value = data.mail_list
     })
   })

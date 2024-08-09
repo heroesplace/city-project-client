@@ -55,7 +55,12 @@
 	const invite = () => {
 		if (characterSearch.value == '') return
 
-		socket.emit('invite_add_character', characterSearch.value)
+        console.log('invite_character', characterSearch.value)
+
+        socket.emit('invite_character', {
+            receiver: characterSearch.value,
+            category: 'chart'
+        })
 
 		characterSearch.value = ''
 	}
@@ -75,11 +80,12 @@
 	}
 
 	onMounted(() => {
-		socket.emit('invite_pull_characters')
+		socket.emit('pull_character_invites', { mode: 'chart' })
 		console.log('[vue] NewVillage mounted')
 
-		socket.on('invite_pull_characters', (data) => {
-			invitedCharacters.value = data.characters
+		socket.on('pull_character_invites', (data) => {
+            console.log(data)
+			invitedCharacters.value = data.invites
 		})
 	})
 
