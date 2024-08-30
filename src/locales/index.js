@@ -41,6 +41,7 @@ const en = {
   mailbox: {
     name: 'Mailbox',
     empty: 'No messages',
+    chart: '{ characterName } has invited you to join his village !'
   },
   village: {
     name: 'Village',
@@ -103,6 +104,7 @@ const fr = {
   mailbox: {
     name: 'Boîte aux lettres',
     empty: 'Pas de messages',
+    chart: '{ characterName } vous invite à rejoindre son village !'
   },
   village: {
     name: 'Village',

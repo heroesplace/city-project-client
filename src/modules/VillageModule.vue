@@ -1,6 +1,6 @@
 <template>
   <div v-if="action == 'create'">
-    <NewVillage @changeAction="action = $event" />
+    <CreateVillage @changeAction="action = $event" />
   </div>
   <div v-else-if="action == 'join'">
     <JoinVillage @changeAction="action = $event" />
@@ -19,7 +19,7 @@
   import { ref, onMounted, onUnmounted } from 'vue'
   import { socket } from '@/api/socket/socket.js'
 
-  import NewVillage from './village/NewVillage.vue'
+  import CreateVillage from './village/CreateVillage.vue'
   import JoinVillage from './village/JoinVillage.vue'
   import ManageVillage from './village/ManageVillage.vue'
 

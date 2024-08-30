@@ -15,7 +15,7 @@
                     </span>
                 </div>
 
-                <div class='invited_member' v-for='item in invitedCharacters' :key='item'>
+                <div class='invited_member' v-for='item in chartMembers' :key='item'>
                     <span>{{ item.name }}</span>
                     <span v-if='item.status == 0'>
                         <img alt='Pending invitation' src='/png/hourglass.png' />
@@ -43,55 +43,49 @@
 	import { ref, onMounted, onUnmounted } from 'vue'
 	import { socket } from '@/api/socket/socket.js'
 
-	import { jwt_parse } from '@/api/web/auth.js'
-
 	const characterSearch = ref('')
-	const invitedCharacters = ref([])
-	const characterName = jwt_parse(localStorage.getItem('token')).characterName
+	const chartMembers = ref([])
+	const characterName = "player_name"
 	const emits = defineEmits(['changeAction'])
 
 	const villageName = ref('')
 
 	const invite = () => {
-		if (characterSearch.value == '') return
+		if (characterSearch.value != '') return
 
-        console.log('invite_character', characterSearch.value)
-
-        socket.emit('invite_character', {
-            receiver: characterSearch.value,
-            category: 'chart'
-        })
+        socket.emit('send_mail', { receiver: characterSearch.value, category: 'chart' })
 
 		characterSearch.value = ''
 	}
 
-	const cancel = () => {
-		if (!confirm('Voulez-vous vraiment annuler la création du village ?')) return
-
-		socket.emit('invite_cancel')
-
-		emits('changeAction', 'choose')
-	}
-
 	const createVillage = () => {
-		socket.emit('village_create', { name: villageName.value })
+		socket.emit('found_village', { name: villageName.value })
 
 		villageName.value = ''
 	}
 
+    const cancel = () => {
+		if (!confirm('Voulez-vous vraiment annuler la création du village ?')) return
+
+		emits('changeAction', 'choose')
+	}
+
 	onMounted(() => {
-		socket.emit('pull_character_invites', { mode: 'chart' })
 		console.log('[vue] NewVillage mounted')
 
-		socket.on('pull_character_invites', (data) => {
-            console.log(data)
-			invitedCharacters.value = data.invites
+		socket.emit('pull_chart_members')
+
+        socket.on('ask_pull_chart_members', () => socket.emit('pull_chart_members'))
+
+		socket.on('pull_chart_members', (data) => {
+			chartMembers.value = data
 		})
 	})
 
 	onUnmounted(() => {
 		console.log('[vue] NewVillage unmounted')
 
-		socket.off('invite_pull_characters')
+		socket.off('ask_pull_chart_members')
+        socket.off('pull_chart_members')
 	})
 </script>

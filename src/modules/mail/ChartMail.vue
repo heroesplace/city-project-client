@@ -6,11 +6,11 @@
             </svg>
         </div>
         <div class="message">
-            <span>{{ item.sender.characterName }} vous invite à fonder un village !</span>
+            <span>{{$t('mailbox.chart', { characterName: item.name })}}</span>
         </div>
         <div class="buttons">
-            <button @click='accept(item.sender._id)'>A</button>
-            <button @click='decline(item.sender._id)'>R</button>
+            <button @click='accept(item.id)'>A</button>
+            <button @click='decline(item.id)'>R</button>
         </div>
     </div>
 </template>
@@ -26,14 +26,14 @@
         required: true
       }
     },
-    setup(props) {
-    },
+    setup() {},
     methods: {
-      accept(sender) {
-        socket.emit('invite_reply', { sender: sender, answer: true })
+      accept(mailId) {
+        console.log(mailId)
+        socket.emit('reply_mail', { mailId, answer: true })
       },
-      decline(sender) {
-        socket.emit('invite_reply', { sender: sender, answer: false })
+      decline(mailId) {
+        socket.emit('reply_mail', { mailId, answer: false })
       }
     }
   })
